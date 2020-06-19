@@ -18,6 +18,7 @@ RecyclerView recyclerViewListOfNotes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Todo Don't know why this acitivity is not being maped ... map this activity
         setContentView(R.layout.activity_list_of_notes);
         ArrayList<SugarModel> listOfSugarModel = new ArrayList<>();
         SugarModel model = new SugarModel();
