@@ -142,12 +142,8 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context, "Clicked on " + callLog.getNumber(), Toast.LENGTH_SHORT).show();
-
-
-
                 }
             });
-
             if(TextUtils.isEmpty(callLog.getName()))
                 itemBinding.textViewName.setText(callLog.getNumber());
             else
@@ -179,11 +175,11 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
                 public void onClick(View view) {
             //        showDialogsds(String.valueOf(callLog.getDate()),callLog.getNumber(),callLog.getName(),itemBinding,position);
                     //Toast.makeText(context, "dddd", Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(context, EditNoteActivity.class);
-                    intent.putExtra("NUMBER",callLog.getNumber());
+                    Intent intent=new Intent(context, ListOfNotes.class);
+                    /*intent.putExtra("NUMBER",callLog.getNumber());
                     intent.putExtra("NAME",callLog.getName());
                     intent.putExtra("DATE",String.valueOf(callLog.getDate()));
-                    intent.putExtra("POSITION",position);
+                    intent.putExtra("POSITION",position);*/
                     context.startActivity(intent);
 
                 }
