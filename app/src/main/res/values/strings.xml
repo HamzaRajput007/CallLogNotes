@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Quick notes</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string-array name="select_status">
+        <item>Select Status</item>
+        <item>Call Back</item>
+        <item>Dead</item>
+        <item>Close</item>
+        <item>High Priority</item>
+        <item>Low Priority</item>
+    </string-array>
+</resources>

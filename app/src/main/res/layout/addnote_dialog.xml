@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:padding="3dp"
+    android:background="@color/colorPrimaryDark"
+    android:gravity="center"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="name"
+            style="@style/Shadow"
+            android:textColor="#fff" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="number"
+            style="@style/Shadow"
+            android:textColor="#fff" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/grouptitle"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:background="#fff"
+            android:padding="10dp"
+            android:textColor="#000"
+            android:gravity="start"
+            android:layout_height="170dp"
+            android:hint="Enter Your Note Here" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal"
+        android:layout_marginTop="3dp"
+        >
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Cancel"
+            android:background="@drawable/button_back"
+            android:gravity="center"
+            android:textColor="#4CAF50" />
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"  />
+
+        <TextView
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:visibility="gone"
+            android:text="Delete"
+            android:textColor="#fff" />
+        <View
+            android:layout_width="5dp"
+            android:layout_height="1dp"  />
+
+        <TextView
+            android:id="@+id/save"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:background="@drawable/button_back"
+            android:text="Save"
+            android:gravity="center"
+            android:textColor="#4CAF50" />
+    </LinearLayout>
+
+
+
+</LinearLayout>
