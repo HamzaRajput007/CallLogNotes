@@ -42,6 +42,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_2_Filename = "FileName";
     public static final String COL_3_CallTime = "CallTime";
 
+    public static final String TABLE_NOTES_OF_CALL_LOG = "NotesOfCallLog";
+    public static final String NOTE_ID = "ID";
+    public static final String NOTE_CONTENT = "NoteContent";
+    public static final String NOTE_TIME_STAMP = "NoteTimeStamp";
+    public static final String NOTE_CALL_LOG_ID = "NoteCallLogId";
+
+
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 9);
         sqLiteDatabase = this.getWritableDatabase();
@@ -55,6 +63,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COL_3_VOICENOTETIME + " VARCHAR );"
         );
         sqLiteDatabase.execSQL(query_voice_notes);
+
+        String query_table_notes_of_call_log = (" CREATE TABLE  " + TABLE_NOTES_OF_CALL_LOG + " (" +
+                NOTE_ID + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
+                NOTE_CONTENT + " VARCHAR ," +
+                NOTE_TIME_STAMP + " TEXT , "+
+                NOTE_CALL_LOG_ID +"INTEGER"+
+                "FOREIGN KEY "+ NOTE_CALL_LOG_ID + "REFERENCE" + TABLE_NAME + "(" + COL_1 +" ));");
+        sqLiteDatabase.execSQL((query_table_notes_of_call_log));
 
         String query_status = (" CREATE TABLE  " + TABLE_STATUS + " (" +
                 COL_1_STATUS_ID + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
@@ -90,7 +106,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + TABLE_VOICE_NOTES);
         sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + TABLE_CALLRECORDING);
         sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + TABLE_STATUS);
+        sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + TABLE_NOTES_OF_CALL_LOG);
         onCreate(sqLiteDatabase);
+
+    }
+
+    public  boolean saveNote(String noteContent , String timeStamp , int callLogId){
+        sqLiteDatabase = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(NOTE_CONTENT , noteContent);
+        cv.put(NOTE_TIME_STAMP , timeStamp);
+        cv.put(NOTE_CALL_LOG_ID , callLogId);
+        long ins = sqLiteDatabase.insert(TABLE_NOTES_OF_CALL_LOG , null , cv);
+        if (ins == -1) {
+            return false;
+        }
+        else{
+            return true;
+        }
 
     }
 
@@ -187,7 +220,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public boolean SAVENOTE(SugarModel model) {
+    /*public boolean SAVENOTE(SugarModel model) {
         sqLiteDatabase = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COL_2, model.getDate());
@@ -203,7 +236,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         } else
             return true;
-    }
+    }*/
     public SugarModel GETNOTE(String date) {
         sqLiteDatabase = this.getReadableDatabase();
         SugarModel model = new SugarModel();

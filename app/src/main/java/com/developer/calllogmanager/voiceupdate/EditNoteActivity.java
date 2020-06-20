@@ -56,7 +56,7 @@ public class EditNoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
-        helper=new DatabaseHelper(this);
+        helper = new DatabaseHelper(this);
         CallerName = getIntent().getStringExtra("NAME");
         CallerNumber = getIntent().getStringExtra("NUMBER");
         CallDate = getIntent().getStringExtra("DATE");
@@ -162,14 +162,14 @@ public class EditNoteActivity extends AppCompatActivity {
             model.setNote(text);
             model.setCurrentTime(currentTime);
             model.setCurrentDate(currentDate);
-            boolean reault = helper.SAVENOTE(model);
+           /* boolean reault = helper.SAVENOTE(model);
             if (reault) {
                 tvCurrentDate.setText(currentDate);
                 tvCurrentTime.setText(currentTime);
                 Snackbar.make(findViewById(android.R.id.content), "Saved.", Snackbar.LENGTH_LONG).show();
             } else {
                 Snackbar.make(findViewById(android.R.id.content), "Error.", Snackbar.LENGTH_LONG).show();
-            }
+            }*/
 
     }
 

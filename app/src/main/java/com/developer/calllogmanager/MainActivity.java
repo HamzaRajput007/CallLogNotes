@@ -144,10 +144,10 @@ public class MainActivity extends AppCompatActivity {
                 if (edit.getText().toString().isEmpty()){
                     return;
                 }
-                boolean reault = databaseHelper.SAVENOTE(model);
+              /*  boolean reault = databaseHelper.SAVENOTE(model);
                 if (reault){
 
-                }
+                }*/
                 AllCallLogFragment fragment1 = new AllCallLogFragment();
                 frmelayout = findViewById(R.id.frmelayout);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frmelayout,fragment1).commit();

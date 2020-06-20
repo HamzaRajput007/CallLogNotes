@@ -201,14 +201,14 @@ public class AfterCallActivity extends AppCompatActivity {
 
 
 
-                if (edit.getText().toString().isEmpty()){
+                /*if (edit.getText().toString().isEmpty()){
                     return;
                 }
                 boolean reault = databaseHelper.SAVENOTE(model);
                 if (reault){
                     finishAffinity();
                     dialog.dismiss();
-                }
+                }*/
                 //model.save();
                 //List<SugarModel> s = SugarModel.findWithQuery(SugarModel.class,"SELECT * FROM SugarModel WHERE `date`="+mydate);
                 ///t.makeText(getActivity().getApplicationContext(), ""+s, Toast.LENGTH_SHORT).show();

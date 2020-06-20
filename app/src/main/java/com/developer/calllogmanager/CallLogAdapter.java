@@ -176,6 +176,8 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
             //        showDialogsds(String.valueOf(callLog.getDate()),callLog.getNumber(),callLog.getName(),itemBinding,position);
                     //Toast.makeText(context, "dddd", Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(context, ListOfNotes.class);
+
+                    /*intent.putExtra("NUMBER",callLog.getNumber());
                     /*intent.putExtra("NUMBER",callLog.getNumber());
                     intent.putExtra("NAME",callLog.getName());
                     intent.putExtra("DATE",String.valueOf(callLog.getDate()));
@@ -184,7 +186,7 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
 
                 }
             });
-            itemBinding.imagedeletenote.setOnClickListener(new View.OnClickListener() {
+            /*temBinding.imagedeletenote.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     final DatabaseHelper databaseHelper= new DatabaseHelper(ClassStatic.activity);
@@ -206,19 +208,23 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
                     }
                     //Toast.makeText(context, "dddd", Toast.LENGTH_SHORT).show();
                 }
-            });
+            });*/
             itemBinding.imageaddnote.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent=new Intent(context, EditNoteActivity.class);
+                    /*Intent intent=new Intent(context, EditNoteActivity.class);
                     intent.putExtra("NUMBER",callLog.getNumber());
                     intent.putExtra("NAME",callLog.getName());
                     intent.putExtra("DATE",String.valueOf(callLog.getDate()));
                     intent.putExtra("POSITION",position);
-                    context.startActivity(intent);
+                    context.startActivity(intent);*/
                  //   showDialogsds(String.valueOf(callLog.getDate()),callLog.getNumber(),callLog.getName(),itemBinding,position);
                    // showDialog(String.valueOf(callLog.getDate()),callLog.getNumber(),callLog.getName(),itemBinding,position);
                     //Toast.makeText(context, "dddd", Toast.LENGTH_SHORT).show();
+
+                    Intent toListOfNotes = new Intent(context , ListOfNotes.class );
+//                    toListOfNotes.putExtra("DATE",String.valueOf(callLog.getDate()));
+                    context.startActivity(toListOfNotes);
                 }
             });
             itemBinding.getRoot().setOnClickListener(new View.OnClickListener() {
@@ -264,14 +270,14 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
                     Snackbar.make(recyclerView, "Please write some Note.", Snackbar.LENGTH_LONG).show();
                     return;
                 }
-                boolean reault = databaseHelper.SAVENOTE(model);
-                if (reault){
-                     itembinding.imageeditnote.setVisibility(View.VISIBLE);
-                     itembinding.imagedeletenote.setVisibility(View.VISIBLE);
-                     itembinding.imageaddnote.setVisibility(View.GONE);
-                     callLogInfoArrayList.get(position).setFlag(true);
-                     notifyDataSetChanged();
-                }
+//                boolean reault = databaseHelper.SAVENOTE(model);
+//                if (reault){
+//                     itembinding.imageeditnote.setVisibility(View.VISIBLE);
+//                     itembinding.imagedeletenote.setVisibility(View.VISIBLE);
+//                     itembinding.imageaddnote.setVisibility(View.GONE);
+//                     callLogInfoArrayList.get(position).setFlag(true);
+//                     notifyDataSetChanged();
+//                }
                     Snackbar.make(recyclerView, "Note saved.", Snackbar.LENGTH_LONG).show();
                 //model.save();
                 //List<SugarModel> s = SugarModel.findWithQuery(SugarModel.class,"SELECT * FROM SugarModel WHERE `date`="+mydate);

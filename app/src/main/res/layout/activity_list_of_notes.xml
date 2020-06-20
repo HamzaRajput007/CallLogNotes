@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:padding="10dp"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ListOfNotes">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"
+        android:text="Tap the note to Edit"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listOfNotesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         >
 
     </android.support.v7.widget.RecyclerView>
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
