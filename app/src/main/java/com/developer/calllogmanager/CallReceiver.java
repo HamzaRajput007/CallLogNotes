@@ -1,6 +1,8 @@
 package com.developer.calllogmanager;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.widget.Toast;
 
@@ -29,7 +31,8 @@ public class CallReceiver extends PhonecallReceiver {
     }
 
     @Override
-    protected void onOutgoingCallEnded(Context ctx, String number, Date start, Date end) {
+    protected void onOutgoingCallEnded(final Context ctx, final String number, final Date start, final Date end) {
+
         Intent intent = new Intent(ctx,AfterCallActivity.class);
         intent.putExtra("call","");
         intent.putExtra("start",start.toString());

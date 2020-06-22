@@ -87,8 +87,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.frmelayout,fragment1).commit();
     }
 
-
-
     private boolean getRuntimePermission(){
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_CALL_LOG,Manifest.permission.READ_CONTACTS,Manifest.permission.READ_PHONE_STATE,Manifest.permission.RECORD_AUDIO,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE},123);
@@ -215,7 +213,6 @@ public class MainActivity extends AppCompatActivity {
 
                     callDetails.setNumber("name here please");
                     callDetails.setNumber(phNumber);
-//                    callDetails.setCallDuration(callDuration);
                     callDetails.setCallType(callType);
                       Date dateObj = new Date(callDate);
                       long time = dateObj.getTime();

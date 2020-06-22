@@ -76,7 +76,7 @@ public class EditNoteActivity extends AppCompatActivity {
 
         spin.setAdapter(adapter);
 
-        getStatusData(adapter);
+//        getStatusData(adapter);
         //saveStatusValue();
 
         SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -107,8 +107,8 @@ public class EditNoteActivity extends AppCompatActivity {
             recordVoiceNote();
             }
         });
-        getVoiceData();
-        getTextData();
+//        getVoiceData();
+//        getTextData();
        /* btnSaveStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,18 +162,18 @@ public class EditNoteActivity extends AppCompatActivity {
             model.setNote(text);
             model.setCurrentTime(currentTime);
             model.setCurrentDate(currentDate);
-           /* boolean reault = helper.SAVENOTE(model);
+            boolean reault = helper.SAVENOTE(model);
             if (reault) {
                 tvCurrentDate.setText(currentDate);
                 tvCurrentTime.setText(currentTime);
                 Snackbar.make(findViewById(android.R.id.content), "Saved.", Snackbar.LENGTH_LONG).show();
             } else {
                 Snackbar.make(findViewById(android.R.id.content), "Error.", Snackbar.LENGTH_LONG).show();
-            }*/
+            }
 
     }
 
-    private void getTextData() {
+  /*  private void getTextData() {
         SugarModel fetch = helper.GETNOTE( CallDate);
         if (fetch!=null) {
             tvCurrentDate = findViewById(R.id.header_date);
@@ -183,10 +183,10 @@ public class EditNoteActivity extends AppCompatActivity {
             if (fetch.getNote() != null)
                 editTextNote.setText(fetch.getNote());
         }
-    }
+    }*/
 
-    private void getVoiceData() {
-        voicePresent=helper.GETVoiceNOTE(CallDate);
+   /* private void getVoiceData() {
+//        voicePresent=helper.GETVoiceNOTE(CallDate);
         if (voicePresent.length()>4){
             btnAddVoice.setText("Add New Voice Note");
             File file=new File(filePath);
@@ -206,9 +206,9 @@ public class EditNoteActivity extends AppCompatActivity {
         else {
             btnAddVoice.setText("Add Voice Note");
         }
-    }
+    }*/
     private void getStatusData(ArrayAdapter<String> adapter) {
-        String a=helper.getStatus(CallDate);
+        /*String a=helper.getStatus(CallDate);
 
         if (a.length()>2){
             chek_status_value="Update";
@@ -219,7 +219,7 @@ public class EditNoteActivity extends AppCompatActivity {
         }
         else {
             chek_status_value="Insert";
-        }
+        }*/
 
     }
 

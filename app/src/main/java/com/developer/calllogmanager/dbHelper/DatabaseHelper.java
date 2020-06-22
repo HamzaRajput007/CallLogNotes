@@ -1,5 +1,6 @@
 package com.developer.calllogmanager.dbHelper;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -64,6 +65,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         );
         sqLiteDatabase.execSQL(query_voice_notes);
 
+        String query_signup = (" CREATE TABLE  " + TABLE_NAME + " (" +
+                COL_1 + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
+                COL_2 + " VARCHAR," +
+                COL_3 + " VARCHAR," +
+                COL_5 + " VARCHAR," +
+                COL_6 + " VARCHAR," +
+                COL_7 + " VARCHAR," +
+                COL_4 + " VARCHAR"+");"
+        );
+        sqLiteDatabase.execSQL(query_signup);
+
         String query_table_notes_of_call_log = (" CREATE TABLE  " + TABLE_NOTES_OF_CALL_LOG + " (" +
                 NOTE_ID + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
                 NOTE_CONTENT + " VARCHAR ," +
@@ -78,19 +90,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COL_3_STATUS_VALUE + " VARCHAR );"
         );
         sqLiteDatabase.execSQL(query_status);
-
-
-        String query_signup = (" CREATE TABLE  " + TABLE_NAME + " (" +
-                COL_1 + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
-                COL_2 + " VARCHAR," +
-                COL_3 + " VARCHAR," +
-                COL_5 + " VARCHAR," +
-                COL_6 + " VARCHAR," +
-                COL_7 + " VARCHAR," +
-                COL_4 + " VARCHAR"+");"
-        );
-        sqLiteDatabase.execSQL(query_signup);
-
 
         String query_customer = (" CREATE TABLE  " + TABLE_CALLRECORDING + " (" +
                 COL_1_ID + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
@@ -124,6 +123,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else{
             return true;
         }
+    }
+
+    //To Get a specific note at onclick listener of list_of_note_activity
+    public Cursor getNote(int noteId){
+        sqLiteDatabase = this.getReadableDatabase();
+        String[] columns = {"NOTE_ID", "NOTE_CONTENT" ,  "NOTE_TIME_STAMP" , "NOTE_CALL_LOG_ID"  };
+        String selection = NOTE_ID+" = ?";
+        String[] selectionArgs = {String.valueOf(noteId)};
+        Cursor cursor = sqLiteDatabase.query(TABLE_NOTES_OF_CALL_LOG, columns, selection, selectionArgs, null, null, null);
+        if (cursor.moveToFirst()) {
+
+            return cursor;
+            //   cursor.moveToNext();
+        }
+        return null;
 
     }
 
@@ -189,7 +203,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public String GETVoiceNOTE(String fileName) {
+    /*public String GETVoiceNOTE(String fileName) {
         sqLiteDatabase = this.getReadableDatabase();
 
         String[] columns = {COL_1_voice_ID, COL_2_FILENOTESNAME,COL_3_VOICENOTETIME};
@@ -203,7 +217,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //   cursor.moveToNext();
         }
         return "";
-    }
+    }*/
     public boolean GETTextNOTE(String fileName) {
         sqLiteDatabase = this.getReadableDatabase();
 
@@ -220,7 +234,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    /*public boolean SAVENOTE(SugarModel model) {
+    public boolean SAVENOTE(SugarModel model) {
         sqLiteDatabase = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COL_2, model.getDate());
@@ -236,10 +250,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         } else
             return true;
-    }*/
-    public SugarModel GETNOTE(String date) {
+    }
+    public ArrayList<SugarModel> GETNOTE(String date) {
         sqLiteDatabase = this.getReadableDatabase();
         SugarModel model = new SugarModel();
+        ArrayList<SugarModel> listOfModels = new ArrayList<>();
+        int i = 1 ;
         Cursor cursor = sqLiteDatabase.rawQuery(" SELECT * FROM " + TABLE_NAME+" WHERE "+COL_2+"="+date, null);
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
@@ -251,10 +267,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 model.setCurrentDate(String.valueOf(cursor.getString(cursor.getColumnIndex(COL_6))));
                 model.setCurrentTime(String.valueOf(cursor.getString(cursor.getColumnIndex(COL_7))));
                 cursor.moveToNext();
+                listOfModels.add(model);
             }
         }
         sqLiteDatabase.close();
-        return model;
+        return listOfModels;
     }
 public ArrayList<SugarModel> FetchData() {
         sqLiteDatabase = this.getReadableDatabase();

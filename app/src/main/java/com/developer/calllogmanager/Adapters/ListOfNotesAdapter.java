@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.developer.calllogmanager.CallLogAdapter;
 import com.developer.calllogmanager.ListOfNotes;
@@ -18,6 +19,7 @@ import com.developer.calllogmanager.Models.SugarModel;
 import com.developer.calllogmanager.R;
 import com.developer.calllogmanager.databinding.ListRowBinding;
 import com.developer.calllogmanager.databinding.RowListOfNotesRecyclerViewBinding;
+import com.developer.calllogmanager.dbHelper.DatabaseHelper;
 import com.developer.calllogmanager.voiceupdate.EditNoteActivity;
 
 import org.w3c.dom.Text;
@@ -27,10 +29,11 @@ import java.util.ArrayList;
 public class ListOfNotesAdapter extends RecyclerView.Adapter<ListOfNotesAdapter.ListOfNotesViewHolder>{
     RowListOfNotesRecyclerViewBinding itemBinding;
     Context context;
-    private ArrayList<ListOfNotesModel> arrayList;
-    public ListOfNotesAdapter(ArrayList<ListOfNotesModel> list , Context context ) {
-        arrayList = new ArrayList<ListOfNotesModel>();
-        for (ListOfNotesModel m: list ) {
+    private ArrayList<SugarModel> arrayList;
+    public ListOfNotesAdapter(ArrayList<SugarModel> list , Context context ) {
+        this.context = context;
+        arrayList = new ArrayList<SugarModel>();
+        for (SugarModel m: list ) {
             arrayList.add(m);
         }
     }
@@ -46,16 +49,20 @@ public class ListOfNotesAdapter extends RecyclerView.Adapter<ListOfNotesAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ListOfNotesViewHolder holder, int position) {
-        ListOfNotesModel sugarModel = arrayList.get(position);
-        holder.nameTv.setText(sugarModel.getNote());
-        holder.statusTv.setText(sugarModel.getStatus());
+        SugarModel notesModel = arrayList.get(position);
+      itemBinding.textViewNameId.setText(notesModel.getNote());
+        itemBinding.textViewStatus.setText(notesModel.getDate());
 
         itemBinding.editNoteImageViewId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toEditNote = new Intent(context , EditNoteActivity.class);
-                // TODO This activity is being crashed Debug it when you are back to work
-                context.startActivity(toEditNote);
+                /*Intent toEditNote = new Intent(context   , EditNoteActivity.class);
+                context.startActivity(toEditNote);*/
+                DatabaseHelper dbHelper = new DatabaseHelper(context);
+                ArrayList<SugarModel> arrayList = new ArrayList<SugarModel>();
+                arrayList = dbHelper.FetchData();
+                Toast.makeText(context, String.valueOf( arrayList.get(1).getDate()), Toast.LENGTH_SHORT).show();
+
 
             }
         });

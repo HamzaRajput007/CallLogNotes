@@ -25,14 +25,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.developer.calllogmanager.Models.SugarModel;
 import com.developer.calllogmanager.databinding.CallLogFragmentBinding;
 import com.developer.calllogmanager.dbHelper.DatabaseHelper;
-
 import java.io.File;
 import java.util.ArrayList;
-
 import static android.support.v4.content.FileProvider.getUriForFile;
 
 public class AllCallLogFragment extends Fragment {

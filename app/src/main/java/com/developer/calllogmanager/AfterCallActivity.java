@@ -1,8 +1,10 @@
 package com.developer.calllogmanager;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -46,6 +48,7 @@ public class AfterCallActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //getActionBar().hide();
         setContentView(R.layout.activity_after_call);
+
         model = new SugarModel();
         databaseHelper= new DatabaseHelper(getApplicationContext());
         color = getResources().getColor(R.color.colorPrimaryDark);
@@ -58,11 +61,34 @@ public class AfterCallActivity extends AppCompatActivity {
         filePath=file.getAbsolutePath();
         mainList = new ArrayList<>();
         mainList =  loadAllData();
+
+        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setTitle("Write a Note for this call");
+        alertBuilder.setMessage("Would you like to add a note and reminder for the last call ?");
+        alertBuilder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                goToEditNoteActivity();
+            }
+        });
+
+        alertBuilder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(AfterCallActivity.this, "No Notes Added for the call", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        alertBuilder.show();
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-              //  showDialog();
-                goToEditNoteActivity();
+//                showDialog();
+//                goToEditNoteActivity();
+
+
+
             }
         },1000);
     }

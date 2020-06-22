@@ -31,6 +31,4 @@ public class SessionManager {
     public boolean getFlag(){
         return pref.getBoolean(FLAG,false);
     }
-
-
 }

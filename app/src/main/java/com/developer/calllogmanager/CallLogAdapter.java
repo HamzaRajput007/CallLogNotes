@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.databinding.adapters.ToolbarBindingAdapter;
 import android.media.MediaPlayer;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -177,11 +178,11 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
                     //Toast.makeText(context, "dddd", Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(context, ListOfNotes.class);
 
-                    /*intent.putExtra("NUMBER",callLog.getNumber());
-                    /*intent.putExtra("NUMBER",callLog.getNumber());
+                    intent.putExtra("NUMBER",callLog.getNumber());
+                    intent.putExtra("NUMBER",callLog.getNumber());
                     intent.putExtra("NAME",callLog.getName());
                     intent.putExtra("DATE",String.valueOf(callLog.getDate()));
-                    intent.putExtra("POSITION",position);*/
+                    intent.putExtra("POSITION",position);
                     context.startActivity(intent);
 
                 }
@@ -223,7 +224,7 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
                     //Toast.makeText(context, "dddd", Toast.LENGTH_SHORT).show();
 
                     Intent toListOfNotes = new Intent(context , ListOfNotes.class );
-//                    toListOfNotes.putExtra("DATE",String.valueOf(callLog.getDate()));
+                    toListOfNotes.putExtra("DATE",String.valueOf(callLog.getDate()));
                     context.startActivity(toListOfNotes);
                 }
             });
@@ -237,11 +238,11 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
         }
     }
 
-    public void showDialog(final String date, final String number, final String name, final ListRowBinding itembinding, final int position){
+   /* public void showDialog(final String date, final String number, final String name, final ListRowBinding itembinding, final int position){
         final SugarModel model = new SugarModel();
         final DatabaseHelper databaseHelper= new DatabaseHelper(ClassStatic.activity);
 //        SugarModel fetch = null;
-        SugarModel fetch = databaseHelper.GETNOTE( date);
+        ArrayList<SugarModel> fetch = databaseHelper.GETNOTE( date);
         final Dialog dialog = new Dialog(ClassStatic.activity);
         dialog.setContentView(R.layout.addnote_dialog);
         dialog.setTitle("Note");
@@ -293,7 +294,7 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
                 dialog.dismiss();
             }
         });
-/*        delete.setOnClickListener(new View.OnClickListener() {
+*//*        delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int id = databaseHelper.deleteEntry(date);
@@ -312,10 +313,10 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
                 }
 
             }
-        });*/
+        });*//*
         dialog.show();
     }
-
+*/
 
     public void showDialogsds(final String date, final String number, final String name, final ListRowBinding itembinding, final int position){
 
@@ -334,8 +335,8 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
         text   =   selectDialog.findViewById(R.id.text);
         mic   =   selectDialog.findViewById(R.id.mic);
         DatabaseHelper helper1=new DatabaseHelper(context);
-        final String filename= helper1.GETVoiceNOTE(date);
-        if(filename.length()>4) {
+//        final String filename= helper1.GETVoiceNOTE(date);
+      /*  if(filename.length()>4) {
             callLogInfoArrayList.get(position).setFlag(true);
             itembinding.imageeditnote.setVisibility(View.VISIBLE);
             itembinding.imagedeletenote.setVisibility(View.VISIBLE);
@@ -345,7 +346,7 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
         else {
             mic.setImageResource(R.drawable.ic_mic);
             callLogInfoArrayList.get(position).setFlag(false);
-        }
+        }*/
         spin  =   selectDialog.findViewById(R.id.spin);
         number1.setText(number);
         name1.setText(name);
@@ -370,7 +371,7 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
             @Override
             public void onClick(View v) {
 
-                if(!filename.isEmpty()) {
+              /*  if(!filename.isEmpty()) {
 
                     Toast.makeText(context, "" + date, Toast.LENGTH_SHORT).show();
                     MediaPlayer mp = new MediaPlayer();
@@ -389,7 +390,7 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
                     if (context instanceof AfterCallActivity) {
                         ((AfterCallActivity) context).recordVoiceNote();
                     }
-/*
+*//*
                     filenameSave= String.valueOf(date);
                     filePath=filePath+"/"+ filenameSave +".wav";
                     AndroidAudioRecorder.with(activity)
@@ -408,9 +409,9 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
 
                             // Start recording
                             .record();
-*/
+*//*
 
-                }
+                }*/
 
             }
         });

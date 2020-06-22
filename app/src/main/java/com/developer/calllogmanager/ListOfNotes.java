@@ -12,41 +12,52 @@ import com.cleveroad.audiovisualization.DbmHandler;
 import com.developer.calllogmanager.Adapters.ListOfNotesAdapter;
 import com.developer.calllogmanager.Models.ListOfNotesModel;
 import com.developer.calllogmanager.Models.SugarModel;
+import com.developer.calllogmanager.dbHelper.DatabaseHelper;
 import com.developer.calllogmanager.voiceupdate.EditNoteActivity;
 
 import java.util.ArrayList;
 
+//Todo make CRUD for List of Notes
+
 public class ListOfNotes extends AppCompatActivity {
 
-RecyclerView recyclerViewListOfNotes;
+    DatabaseHelper databaseHelper;
 
+    RecyclerView recyclerViewListOfNotes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_notes);
-        ArrayList<ListOfNotesModel> listOfSugarModel = new ArrayList<>();
+
+        databaseHelper = new DatabaseHelper(getBaseContext());
+        ArrayList<ListOfNotesModel> listOfNotesModels = new ArrayList<>();
         ListOfNotesModel model = new ListOfNotesModel("Note 1" , "Active" , 1);
         ListOfNotesModel model2 = new ListOfNotesModel("Note 2" , "Dead" , 2);
-        listOfSugarModel.add(model);
-        listOfSugarModel.add(model2);
-        listOfSugarModel.add(model);
-        listOfSugarModel.add(model2);
-        listOfSugarModel.add(model);
-        listOfSugarModel.add(model2);
-        listOfSugarModel.add(model);
-        listOfSugarModel.add(model2);
-        listOfSugarModel.add(model);
-        listOfSugarModel.add(model2);
-        listOfSugarModel.add(model);
-        listOfSugarModel.add(model2);
+
+        String Date = getIntent().getStringExtra("DATE");
+        ArrayList<SugarModel> notes = new ArrayList<>();
+
+        notes = databaseHelper.GETNOTE(Date);
+        listOfNotesModels.add(model);
+        listOfNotesModels.add(model2);
+        listOfNotesModels.add(model);
+        listOfNotesModels.add(model2);
+        listOfNotesModels.add(model);
+        listOfNotesModels.add(model2);
+        listOfNotesModels.add(model);
+        listOfNotesModels.add(model2);
+        listOfNotesModels.add(model);
+        listOfNotesModels.add(model2);
+        listOfNotesModels.add(model);
+        listOfNotesModels.add(model2);
 
         recyclerViewListOfNotes = findViewById(R.id.listOfNotesRecyclerView);
         recyclerViewListOfNotes.setHasFixedSize(true);
         recyclerViewListOfNotes.setLayoutManager(new LinearLayoutManager(this));
-        ListOfNotesAdapter adapter = new ListOfNotesAdapter(listOfSugarModel , this);
+        ListOfNotesAdapter adapter = new ListOfNotesAdapter(notes , this);
         recyclerViewListOfNotes.setAdapter(adapter);
 
-        Toast.makeText(this, String.valueOf(listOfSugarModel.size()), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, Date, Toast.LENGTH_LONG).show();
     }
 
 }
