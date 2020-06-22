@@ -50,6 +50,7 @@ public class ListOfNotesAdapter extends RecyclerView.Adapter<ListOfNotesAdapter.
     @Override
     public void onBindViewHolder(@NonNull ListOfNotesViewHolder holder, int position) {
         SugarModel notesModel = arrayList.get(position);
+        // TODO notesModel is presenting the same data at the view find out why and resolve it when you are back to work
       itemBinding.textViewNameId.setText(notesModel.getNote());
         itemBinding.textViewStatus.setText(notesModel.getDate());
 

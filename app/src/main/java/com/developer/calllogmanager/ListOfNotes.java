@@ -17,7 +17,6 @@ import com.developer.calllogmanager.voiceupdate.EditNoteActivity;
 
 import java.util.ArrayList;
 
-//Todo make CRUD for List of Notes
 
 public class ListOfNotes extends AppCompatActivity {
 
