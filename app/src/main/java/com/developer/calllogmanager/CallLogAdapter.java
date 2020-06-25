@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
-import android.databinding.adapters.ToolbarBindingAdapter;
 import android.media.MediaPlayer;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -21,19 +20,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toast;
 
 import com.developer.calllogmanager.Models.SugarModel;
 import com.developer.calllogmanager.databinding.ListRowBinding;
 import com.developer.calllogmanager.dbHelper.DatabaseHelper;
-import com.developer.calllogmanager.voiceupdate.EditNoteActivity;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -158,7 +155,7 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
             if (callLog.isFlag()){
                 itemBinding.imagedeletenote.setVisibility(View.VISIBLE);
                 itemBinding.imageeditnote.setVisibility(View.VISIBLE);
-                itemBinding.imageaddnote.setVisibility(View.GONE);
+                itemBinding.imageaddnote.setVisibility(View.VISIBLE);
 
             }
             else{
@@ -179,7 +176,6 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
                     Intent intent=new Intent(context, ListOfNotes.class);
 
                     intent.putExtra("NUMBER",callLog.getNumber());
-                    intent.putExtra("NUMBER",callLog.getNumber());
                     intent.putExtra("NAME",callLog.getName());
                     intent.putExtra("DATE",String.valueOf(callLog.getDate()));
                     intent.putExtra("POSITION",position);
@@ -187,7 +183,7 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
 
                 }
             });
-            /*temBinding.imagedeletenote.setOnClickListener(new View.OnClickListener() {
+            itemBinding.imagedeletenote.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     final DatabaseHelper databaseHelper= new DatabaseHelper(ClassStatic.activity);
@@ -209,7 +205,7 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
                     }
                     //Toast.makeText(context, "dddd", Toast.LENGTH_SHORT).show();
                 }
-            });*/
+            });
             itemBinding.imageaddnote.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -223,9 +219,9 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
                    // showDialog(String.valueOf(callLog.getDate()),callLog.getNumber(),callLog.getName(),itemBinding,position);
                     //Toast.makeText(context, "dddd", Toast.LENGTH_SHORT).show();
 
-                    Intent toListOfNotes = new Intent(context , ListOfNotes.class );
-                    toListOfNotes.putExtra("DATE",String.valueOf(callLog.getDate()));
-                    context.startActivity(toListOfNotes);
+                    Intent toEditNOte = new Intent(context , EditNoteActivity.class );
+                    toEditNOte.putExtra("DATE",String.valueOf(callLog.getDate()));
+                    context.startActivity(toEditNOte);
                 }
             });
             itemBinding.getRoot().setOnClickListener(new View.OnClickListener() {

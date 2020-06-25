@@ -1,9 +1,7 @@
 package com.developer.calllogmanager.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,18 +10,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.developer.calllogmanager.CallLogAdapter;
-import com.developer.calllogmanager.ListOfNotes;
-import com.developer.calllogmanager.Models.ListOfNotesModel;
 import com.developer.calllogmanager.Models.SugarModel;
 import com.developer.calllogmanager.R;
-import com.developer.calllogmanager.databinding.ListRowBinding;
 import com.developer.calllogmanager.databinding.RowListOfNotesRecyclerViewBinding;
 import com.developer.calllogmanager.dbHelper.DatabaseHelper;
-import com.developer.calllogmanager.voiceupdate.EditNoteActivity;
 
-import org.w3c.dom.Text;
-
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class ListOfNotesAdapter extends RecyclerView.Adapter<ListOfNotesAdapter.ListOfNotesViewHolder>{
@@ -34,8 +27,11 @@ public class ListOfNotesAdapter extends RecyclerView.Adapter<ListOfNotesAdapter.
         this.context = context;
         arrayList = new ArrayList<SugarModel>();
         for (SugarModel m: list ) {
+            String name = m.getNote();
+            String number = m.getNumber();
             arrayList.add(m);
-        }
+            arrayList.indexOf(m);
+            int size = arrayList.size();        }
     }
 
     @NonNull
@@ -49,22 +45,22 @@ public class ListOfNotesAdapter extends RecyclerView.Adapter<ListOfNotesAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ListOfNotesViewHolder holder, int position) {
-        SugarModel notesModel = arrayList.get(position);
+        final SugarModel notesModel = arrayList.get(position);
+        Long dateValue = Long.parseLong(notesModel.getDate());
         // TODO notesModel is presenting the same data at the view find out why and resolve it when you are back to work
-      itemBinding.textViewNameId.setText(notesModel.getNote());
-        itemBinding.textViewStatus.setText(notesModel.getDate());
+        final Date dateObj = new Date(dateValue);
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy hh:mm a");
+        itemBinding.textViewNameId.setText(notesModel.getNote());
+        itemBinding.textViewStatus.setText(simpleDateFormat.format(dateObj));
 
         itemBinding.editNoteImageViewId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent toEditNote = new Intent(context   , EditNoteActivity.class);
-                context.startActivity(toEditNote);*/
+                // TODO simple comment
                 DatabaseHelper dbHelper = new DatabaseHelper(context);
                 ArrayList<SugarModel> arrayList = new ArrayList<SugarModel>();
                 arrayList = dbHelper.FetchData();
-                Toast.makeText(context, String.valueOf( arrayList.get(1).getDate()), Toast.LENGTH_SHORT).show();
-
-
+                Toast.makeText(context, simpleDateFormat.format(dateObj), Toast.LENGTH_SHORT).show();
             }
         });
 

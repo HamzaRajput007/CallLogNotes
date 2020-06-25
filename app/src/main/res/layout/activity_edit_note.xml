@@ -1,149 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
-
-
-    <android.support.v7.widget.Toolbar
-        android:background="@color/colorPrimary"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:weightSum="2"
-            android:layout_height="match_parent">
-          <!--  <TextView
-                android:id="@+id/header_name"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="name"
-                android:gravity="center|start"
-                android:textColor="@android:color/white"
-                android:textSize="12sp"
-                />-->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:weightSum="2"
-                >
-
-                <TextView
-                    android:id="@+id/header_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="start|bottom"
-                    android:text="name"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp" />
-                <TextView
-                    android:id="@+id/header_number"
-                    android:text="number"
-                    android:gravity="start|top"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    />
-            </LinearLayout>
-            <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:weightSum="2"
-                android:layout_marginRight="15dp"
-            >
-            <TextView
-                android:id="@+id/header_date"
-                android:text="date"
-                android:gravity="end|bottom"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                />
-            <TextView
-                android:id="@+id/header_time"
-                android:text="time"
-                android:gravity="top|end"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:textColor="@android:color/white"
-                android:textSize="14sp"
-                />
-        </LinearLayout>
-           <!-- <TextView
-                android:visibility="gone"
-                android:text="number"
-                android:gravity="center|end"
-                android:paddingRight="5dp"
-                android:layout_marginRight="5dp"
-                android:id="@+id/header_number"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textColor="@android:color/white"
-                android:textSize="12sp"
-                />-->
-        </LinearLayout>
-
-    </android.support.v7.widget.Toolbar>
-
-
+<layout     xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
-        android:orientation="horizontal"
-        android:weightSum="3"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
-        <Spinner
-            android:id="@+id/spinner1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:drawableTint="@color/colorPrimary"
-            android:foregroundTint="@color/colorPrimaryDark"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+
+        <android.support.v7.widget.Toolbar
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:weightSum="2"
+                android:layout_height="match_parent">
+                <!--  <TextView
+                      android:id="@+id/header_name"
+                      android:layout_width="0dp"
+                      android:layout_height="match_parent"
+                      android:layout_weight="1"
+                      android:text="name"
+                      android:gravity="center|start"
+                      android:textColor="@android:color/white"
+                      android:textSize="12sp"
+                      />-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:weightSum="2"
+                    >
+
+                    <TextView
+                        android:id="@+id/header_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="start|bottom"
+                        android:text="name"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/header_number"
+                        android:text="number"
+                        android:gravity="start|top"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:weightSum="2"
+                    android:layout_marginRight="15dp"
+                    >
+                    <TextView
+                        android:id="@+id/header_date"
+                        android:text="date"
+                        android:gravity="end|bottom"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        />
+                    <TextView
+                        android:id="@+id/header_time"
+                        android:text="time"
+                        android:gravity="top|end"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        />
+                </LinearLayout>
+                <!-- <TextView
+                     android:visibility="gone"
+                     android:text="number"
+                     android:gravity="center|end"
+                     android:paddingRight="5dp"
+                     android:layout_marginRight="5dp"
+                     android:id="@+id/header_number"
+                     android:layout_width="0dp"
+                     android:layout_height="match_parent"
+                     android:layout_weight="1"
+                     android:textColor="@android:color/white"
+                     android:textSize="12sp"
+                     />-->
+            </LinearLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:drawableTint="@color/colorPrimary"
+                android:foregroundTint="@color/colorPrimaryDark"
+                android:layout_margin="10dp"
+                android:textColorHint="#000"
+                android:textColor="#000000"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:hint="Select Status" />
+            <Button
+                android:visibility="gone"
+                android:id="@+id/btnSaveStatus"
+                android:text="Save Status"
+                android:background="@drawable/btn_background"
+                android:layout_width="0dp"
+                android:layout_weight=".8"
+                android:textColor="#fff"
+                android:textSize="8dp"
+                android:padding="5dp"
+                android:layout_margin="10dp"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/editTextNote"
+            android:background="@drawable/edittex_background"
+            android:padding="10dp"
+            android:textColor="#000"
             android:layout_margin="10dp"
-            android:textColorHint="#000"
-            android:textColor="#000000"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:hint="Select Status" />
-        <Button
-            android:visibility="gone"
-            android:id="@+id/btnSaveStatus"
-            android:text="Save Status"
-            android:background="@drawable/btn_background"
-            android:layout_width="0dp"
-            android:layout_weight=".8"
-            android:textColor="#fff"
-            android:textSize="8dp"
-            android:padding="5dp"
-            android:layout_margin="10dp"
-            android:layout_height="match_parent"/>
-
-    </LinearLayout>
-
-
-    <EditText
-        android:id="@+id/editTextNote"
-        android:background="@drawable/edittex_background"
-        android:padding="10dp"
-        android:textColor="#000"
-        android:layout_margin="10dp"
-        android:gravity="start"
-        android:hint="Enter Your Note Here"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+            android:gravity="start"
+            android:hint="Enter Your Note Here"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
 
 
         <Button
@@ -158,23 +158,25 @@
             android:layout_height="wrap_content"/>
 
 
-    <LinearLayout
-        android:id="@+id/linear"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_margin="10dp"
-        android:orientation="horizontal" />
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_margin="10dp"
+            android:orientation="horizontal" />
 
-    <Button
-        android:id="@+id/btnAddVoice"
-        android:text="Add Voice Note"
-        android:background="@drawable/btn_background"
-        android:layout_width="200dp"
-        android:layout_margin="10dp"
-        android:textColor="#fff"
-        android:drawableLeft="@drawable/ic_mic_white"
-        android:paddingLeft="10dp"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btnAddVoice"
+            android:text="Add Voice Note"
+            android:background="@drawable/btn_background"
+            android:layout_width="200dp"
+            android:layout_margin="10dp"
+            android:textColor="#fff"
+            android:drawableLeft="@drawable/ic_mic_white"
+            android:paddingLeft="10dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"/>
 
-</LinearLayout>
+    </LinearLayout>
+
+</layout>

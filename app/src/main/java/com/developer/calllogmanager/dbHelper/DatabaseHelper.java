@@ -110,7 +110,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public  boolean saveNote(String noteContent , String timeStamp , int callLogId){
+    public  boolean saveNote(String noteContent , String timeStamp , String callLogId){
         sqLiteDatabase = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(NOTE_CONTENT , noteContent);
@@ -251,27 +251,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } else
             return true;
     }
-    public ArrayList<SugarModel> GETNOTE(String date) {
+    public Cursor GETNOTE(String date) {
         sqLiteDatabase = this.getReadableDatabase();
         SugarModel model = new SugarModel();
-        ArrayList<SugarModel> listOfModels = new ArrayList<>();
-        int i = 1 ;
         Cursor cursor = sqLiteDatabase.rawQuery(" SELECT * FROM " + TABLE_NAME+" WHERE "+COL_2+"="+date, null);
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-
-                model.setDate(String.valueOf(cursor.getString(cursor.getColumnIndex(COL_2))));
-                model.setNote(String.valueOf(cursor.getString(cursor.getColumnIndex(COL_3))));
-                model.setExtra(String.valueOf(cursor.getString(cursor.getColumnIndex(COL_4))));
-                model.setNumber(String.valueOf(cursor.getString(cursor.getColumnIndex(COL_5))));
-                model.setCurrentDate(String.valueOf(cursor.getString(cursor.getColumnIndex(COL_6))));
-                model.setCurrentTime(String.valueOf(cursor.getString(cursor.getColumnIndex(COL_7))));
-                cursor.moveToNext();
-                listOfModels.add(model);
-            }
-        }
-        sqLiteDatabase.close();
-        return listOfModels;
+//        sqLiteDatabase.close();
+        return cursor;
     }
 public ArrayList<SugarModel> FetchData() {
         sqLiteDatabase = this.getReadableDatabase();

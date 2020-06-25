@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 import com.developer.calllogmanager.Models.SugarModel;
 import com.developer.calllogmanager.dbHelper.DatabaseHelper;
-import com.developer.calllogmanager.voiceupdate.EditNoteActivity;
 
 import java.io.File;
 import java.util.ArrayList;

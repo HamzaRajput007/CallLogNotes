@@ -16,7 +16,7 @@
         android:textSize="18dp"
         android:textStyle="bold"
         android:layout_marginBottom="10dp"
-        android:text="Tap the note to Edit"/>
+        android:text="Tap edit icon to edit note"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listOfNotesRecyclerView"

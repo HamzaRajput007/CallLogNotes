@@ -1,19 +1,16 @@
 package com.developer.calllogmanager;
 
-import android.content.Intent;
-import android.graphics.HardwareRenderer;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-import com.cleveroad.audiovisualization.DbmHandler;
 import com.developer.calllogmanager.Adapters.ListOfNotesAdapter;
 import com.developer.calllogmanager.Models.ListOfNotesModel;
 import com.developer.calllogmanager.Models.SugarModel;
 import com.developer.calllogmanager.dbHelper.DatabaseHelper;
-import com.developer.calllogmanager.voiceupdate.EditNoteActivity;
 
 import java.util.ArrayList;
 
@@ -29,31 +26,29 @@ public class ListOfNotes extends AppCompatActivity {
         setContentView(R.layout.activity_list_of_notes);
 
         databaseHelper = new DatabaseHelper(getBaseContext());
-        ArrayList<ListOfNotesModel> listOfNotesModels = new ArrayList<>();
-        ListOfNotesModel model = new ListOfNotesModel("Note 1" , "Active" , 1);
-        ListOfNotesModel model2 = new ListOfNotesModel("Note 2" , "Dead" , 2);
-
+        ArrayList<SugarModel> records = new ArrayList<>();
+        SugarModel model = new SugarModel();
         String Date = getIntent().getStringExtra("DATE");
-        ArrayList<SugarModel> notes = new ArrayList<>();
+        Cursor cursor = databaseHelper.GETNOTE(Date);
 
-        notes = databaseHelper.GETNOTE(Date);
-        listOfNotesModels.add(model);
-        listOfNotesModels.add(model2);
-        listOfNotesModels.add(model);
-        listOfNotesModels.add(model2);
-        listOfNotesModels.add(model);
-        listOfNotesModels.add(model2);
-        listOfNotesModels.add(model);
-        listOfNotesModels.add(model2);
-        listOfNotesModels.add(model);
-        listOfNotesModels.add(model2);
-        listOfNotesModels.add(model);
-        listOfNotesModels.add(model2);
+        if(cursor.moveToFirst()){
+            while (!cursor.isAfterLast()) {
+                model.setDate(String.valueOf(cursor.getString(cursor.getColumnIndex("DATE"))));
+                model.setNote(String.valueOf(cursor.getString(cursor.getColumnIndex("NOTE"))));
+                model.setExtra(String.valueOf(cursor.getString(cursor.getColumnIndex("EXTRA"))));
+                model.setNumber(String.valueOf(cursor.getString(cursor.getColumnIndex("NUMBER"))));
+                model.setCurrentDate(String.valueOf(cursor.getString(cursor.getColumnIndex("CURRENTDATE"))));
+                model.setCurrentTime(String.valueOf(cursor.getString(cursor.getColumnIndex("CURRENTTIME"))));
+                cursor.moveToNext();
+                records.add(model);
+            }
+        }
+
 
         recyclerViewListOfNotes = findViewById(R.id.listOfNotesRecyclerView);
         recyclerViewListOfNotes.setHasFixedSize(true);
         recyclerViewListOfNotes.setLayoutManager(new LinearLayoutManager(this));
-        ListOfNotesAdapter adapter = new ListOfNotesAdapter(notes , this);
+        ListOfNotesAdapter adapter = new ListOfNotesAdapter(records , this);
         recyclerViewListOfNotes.setAdapter(adapter);
 
         Toast.makeText(this, Date, Toast.LENGTH_LONG).show();
