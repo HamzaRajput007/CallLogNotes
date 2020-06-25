@@ -71,7 +71,6 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="Cancel"
-                    android:onClick="cencelReminder"
                     android:background="@drawable/button_back"
                     android:gravity="center"
                     android:textColor="#4CAF50" />

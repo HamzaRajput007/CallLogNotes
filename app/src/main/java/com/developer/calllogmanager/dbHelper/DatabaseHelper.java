@@ -6,9 +6,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.VisibleForTesting;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 
 import com.developer.calllogmanager.Models.SugarModel;
+import com.orm.dsl.Table;
 
 import java.util.ArrayList;
 
@@ -25,7 +29,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_5 = "NUMBER";
     public static final String COL_6= "CURRENTDATE";
     public static final String COL_7 = "CURRENTTIME";
-
 
     public static final String TABLE_VOICE_NOTES = "TABLEVoiceNotes";
     public static final String COL_1_voice_ID = "ID";
@@ -49,21 +52,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String NOTE_TIME_STAMP = "NoteTimeStamp";
     public static final String NOTE_CALL_LOG_ID = "NoteCallLogId";
 
+    public static final String REMINDERS_TABLE  = "REMINDERS_TABLE";
+    public static final String REMINDER_ID = "ID";
+    public static final String HOURS = "HOURS";
+    public static final String MINUTES = "MINUTES";
+    public static final String DAY_OF_MONTH = "DATE";
+    public static final String MONTH = "MONTH";
+    public static final String YEAR = "YEAR";
+    public static final String REMINDER_NOTE_ID = "NOTE_ID";
+    public static final String AMPM = "AMPM";
 
+    Context context;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 9);
         sqLiteDatabase = this.getWritableDatabase();
+        this.context = context;
+//        onCreate(sqLiteDatabase);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+
+
         String query_voice_notes = (" CREATE TABLE  " + TABLE_VOICE_NOTES + " (" +
                 COL_1_voice_ID + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
                 COL_2_FILENOTESNAME + " VARCHAR," +
                 COL_3_VOICENOTETIME + " VARCHAR );"
         );
+        
         sqLiteDatabase.execSQL(query_voice_notes);
+
+        /*String query_reminder_table = (" CREATE TABLE " + REMINDERS_TABLE + " ( " +
+              REMINDER_ID + "INTEGER PRIMARY KEY AUTOINCREMENT," +
+                HOURS +" INTEGER, " +
+                MINUTES +" INTEGER, " +
+                DAY_OF_MONTH +" INTEGER, " +
+                MONTH +" INTEGER, " +
+                YEAR +" INTEGER, " +
+                REMINDER_NOTE_ID + "INTEGER," +
+                AMPM + "VARCHAR"+");"
+        );
+        sqLiteDatabase.execSQL(query_reminder_table);*/
 
         String query_signup = (" CREATE TABLE  " + TABLE_NAME + " (" +
                 COL_1 + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
@@ -76,13 +106,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         );
         sqLiteDatabase.execSQL(query_signup);
 
-        String query_table_notes_of_call_log = (" CREATE TABLE  " + TABLE_NOTES_OF_CALL_LOG + " (" +
+       /* String query_table_notes_of_call_log = (" CREATE TABLE  " + TABLE_NOTES_OF_CALL_LOG + " (" +
                 NOTE_ID + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
                 NOTE_CONTENT + " VARCHAR ," +
                 NOTE_TIME_STAMP + " TEXT , "+
                 NOTE_CALL_LOG_ID +"INTEGER"+
                 "FOREIGN KEY "+ NOTE_CALL_LOG_ID + "REFERENCE" + TABLE_NAME + "(" + COL_1 +" ));");
-        sqLiteDatabase.execSQL((query_table_notes_of_call_log));
+        sqLiteDatabase.execSQL((query_table_notes_of_call_log));*/
 
         String query_status = (" CREATE TABLE  " + TABLE_STATUS + " (" +
                 COL_1_STATUS_ID + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
@@ -101,13 +131,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
         sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + TABLE_NAME);
         sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + TABLE_VOICE_NOTES);
         sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + TABLE_CALLRECORDING);
         sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + TABLE_STATUS);
         sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + TABLE_NOTES_OF_CALL_LOG);
+        sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + REMINDERS_TABLE);
         onCreate(sqLiteDatabase);
 
+    }
+
+    public Cursor getReminder(int noteID){
+        sqLiteDatabase = this.getReadableDatabase();
+        String[] columns = {REMINDER_ID , HOURS , MINUTES , YEAR , MONTH , DAY_OF_MONTH};
+        String selection = REMINDER_NOTE_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(noteID)};
+        Cursor cursor = sqLiteDatabase.query(REMINDERS_TABLE , columns , selection , selectionArgs , null , null , null);
+        if(cursor.moveToFirst()){
+            return cursor;
+        }
+        return null;
+    }
+
+    //Todo SQLiteException: no such table: REMINDERS_TABLE occurs when inserting ... Resolve it when you are back
+
+    public boolean saveReminder(int year , int month , int dayOfMonth , int hours , int minutes , String amPm ){
+        sqLiteDatabase = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(YEAR , year);
+        cv.put(MONTH , month);
+        cv.put(DAY_OF_MONTH , dayOfMonth);
+        cv.put(HOURS , hours);
+        cv.put(MINUTES , minutes);
+        cv.put(AMPM , amPm);
+        long ins = sqLiteDatabase.insert(REMINDERS_TABLE , null , cv);
+        if(ins == -1 ){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
     public  boolean saveNote(String noteContent , String timeStamp , String callLogId){
@@ -140,6 +204,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
 
     }
+
+
+
 
     public boolean SaveStatus(String date,String value) {
         sqLiteDatabase = this.getWritableDatabase();
@@ -203,7 +270,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    /*public String GETVoiceNOTE(String fileName) {
+    public String GETVoiceNOTE(String fileName) {
         sqLiteDatabase = this.getReadableDatabase();
 
         String[] columns = {COL_1_voice_ID, COL_2_FILENOTESNAME,COL_3_VOICENOTETIME};
@@ -217,7 +284,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //   cursor.moveToNext();
         }
         return "";
-    }*/
+    }
     public boolean GETTextNOTE(String fileName) {
         sqLiteDatabase = this.getReadableDatabase();
 
@@ -243,8 +310,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COL_5, model.getNumber());
         cv.put(COL_6, model.getCurrentDate());
         cv.put(COL_7, model.getCurrentTime());
-
-
         long ins = sqLiteDatabase.insert(TABLE_NAME, null, cv);
         if (ins == -1) {
             return false;
@@ -371,4 +436,6 @@ public ArrayList<SugarModel> FetchVoiceData() {
         }
         return arrayList;
     }
+
+
 }

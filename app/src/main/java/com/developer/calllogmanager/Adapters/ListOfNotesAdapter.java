@@ -52,11 +52,9 @@ public class ListOfNotesAdapter extends RecyclerView.Adapter<ListOfNotesAdapter.
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy hh:mm a");
         itemBinding.textViewNameId.setText(notesModel.getNote());
         itemBinding.textViewStatus.setText(simpleDateFormat.format(dateObj));
-
         itemBinding.editNoteImageViewId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO simple comment
                 DatabaseHelper dbHelper = new DatabaseHelper(context);
                 ArrayList<SugarModel> arrayList = new ArrayList<SugarModel>();
                 arrayList = dbHelper.FetchData();

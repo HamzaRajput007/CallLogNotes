@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
@@ -17,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -28,7 +31,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.developer.calllogmanager.Models.SugarModel;
-import com.developer.calllogmanager.databinding.AddReminderLayoutBinding;
 import com.developer.calllogmanager.databinding.ListRowBinding;
 import com.developer.calllogmanager.dbHelper.DatabaseHelper;
 import com.developer.calllogmanager.voiceupdate.prefrence.SessionManager;
@@ -79,13 +81,13 @@ public class EditNoteActivity extends AppCompatActivity {
         header_number   =   findViewById(R.id.header_number);
         header_name   =   findViewById(R.id.header_name);
         tvCurrentDate = findViewById(R.id.textViewCallDate);
-        reminderDatePicker = findViewById(R.id.calendarViewId);
+       /* reminderDatePicker = findViewById(R.id.calendarViewId);
         reminderDatePicker.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 Toast.makeText(EditNoteActivity.this, String.valueOf(month) + " ", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
       //  btnSaveStatus   =   findViewById(R.id.btnSaveStatus);
 
         header_name.setText(CallerName);
@@ -147,7 +149,13 @@ public class EditNoteActivity extends AppCompatActivity {
                     saveStatus();
 
                     final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(EditNoteActivity.this);
-                    alertBuilder.setView(R.layout.add_reminder_layout);
+                    alertBuilder.setView(R.layout.ask_reminder_dialog);
+                    alertBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            dialog.dismiss();
+                        }
+                    });
                     alertBuilder.show();
                 }
 
@@ -207,8 +215,8 @@ public class EditNoteActivity extends AppCompatActivity {
         }
     }
 
-   /* private void getVoiceData() {
-//        voicePresent=helper.GETVoiceNOTE(CallDate);
+    private void getVoiceData() {
+        voicePresent=helper.GETVoiceNOTE(CallDate);
         if (voicePresent.length()>4){
             btnAddVoice.setText("Add New Voice Note");
             File file=new File(filePath);
@@ -228,7 +236,7 @@ public class EditNoteActivity extends AppCompatActivity {
         else {
             btnAddVoice.setText("Add Voice Note");
         }
-    }*/
+    }
     private void getStatusData(ArrayAdapter<String> adapter) {
         /*String a=helper.getStatus(CallDate);
 
@@ -369,13 +377,13 @@ public class EditNoteActivity extends AppCompatActivity {
         return time;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     public void saveReminder(View view) {
         Intent toSaveReminder = new Intent(EditNoteActivity.this , AddReminder.class);
         startActivity(toSaveReminder);
         finish();
     }
-    public void noReminderToSave(View view) {
+
+    public void cencelReminder(View view) {
         Toast.makeText(this, "No Reminders Added", Toast.LENGTH_SHORT).show();
         Intent toMain = new Intent(EditNoteActivity.this , MainActivity.class);
         startActivity(toMain);
