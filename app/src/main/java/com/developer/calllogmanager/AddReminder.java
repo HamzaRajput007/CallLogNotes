@@ -10,6 +10,7 @@ import android.widget.CalendarView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.developer.calllogmanager.Models.SugarModel;
 import com.developer.calllogmanager.dbHelper.DatabaseHelper;
 
 import java.sql.Date;
@@ -21,7 +22,8 @@ public class AddReminder extends AppCompatActivity {
     TimePicker timePicker;
     Button btnSaveReminder , btnDontSaveReminder;
     DatabaseHelper helper;
-
+    SugarModel modelSugar;
+    String date,note,number,extra;
     int reminderYear , reminderMonth , reminderDayOfMonth , reminderHours , reminderMinutes ;
 
 
@@ -30,6 +32,13 @@ public class AddReminder extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_reminder);
+        modelSugar  = new SugarModel();
+//        modelSugar = (SugarModel) getIntent().getSerializableExtra("SugarModel");
+
+        date = getIntent().getStringExtra("Date");
+        note = getIntent().getStringExtra("Note");
+        number = getIntent().getStringExtra("Number");
+        extra = getIntent().getStringExtra("Extra");
 
         helper = new DatabaseHelper(this );
         calendarView = findViewById(R.id.calendarViewSaveReminderId);
@@ -58,8 +67,18 @@ public class AddReminder extends AppCompatActivity {
         btnSaveReminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                modelSugar.setDate(date);
+                modelSugar.setNumber(number);
+                modelSugar.setNote(note);
+                modelSugar.setExtra(extra);
+                modelSugar.setHours(reminderHours);
+                modelSugar.setMinutes(reminderMinutes);
+                modelSugar.setDayOfMonth(reminderDayOfMonth);
+                modelSugar.setMonth(reminderMonth);
+                modelSugar.setYear(reminderYear);
+                modelSugar.setAmpm("AM");
 
-                boolean result = helper.saveReminder(reminderYear , reminderMonth , reminderDayOfMonth , reminderHours , reminderMinutes , "AM");
+                boolean result = helper.SAVENOTE(modelSugar);
 
                 if (result) {
                     Snackbar.make(findViewById(android.R.id.content), "Reminder Saved.", Snackbar.LENGTH_LONG).show();

@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
+import android.icu.text.UnicodeSetSpanner;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -31,11 +33,13 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.developer.calllogmanager.Models.SugarModel;
+import com.developer.calllogmanager.databinding.AskReminderDialogBinding;
 import com.developer.calllogmanager.databinding.ListRowBinding;
 import com.developer.calllogmanager.dbHelper.DatabaseHelper;
 import com.developer.calllogmanager.voiceupdate.prefrence.SessionManager;
 
 import java.io.File;
+import java.io.Serializable;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,11 +70,14 @@ public class EditNoteActivity extends AppCompatActivity {
     TextView tvCurrentDate, tvCurrentTime;
     TimePicker reminderTimePicker ;
     CalendarView reminderDatePicker;
+    SugarModel model = new SugarModel();  // this model will be not completely initialized here ... reminder data needs to be added
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
+
+
 
         helper = new DatabaseHelper(this);
         CallerName = getIntent().getStringExtra("NAME");
@@ -81,14 +88,8 @@ public class EditNoteActivity extends AppCompatActivity {
         header_number   =   findViewById(R.id.header_number);
         header_name   =   findViewById(R.id.header_name);
         tvCurrentDate = findViewById(R.id.textViewCallDate);
-       /* reminderDatePicker = findViewById(R.id.calendarViewId);
-        reminderDatePicker.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                Toast.makeText(EditNoteActivity.this, String.valueOf(month) + " ", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-      //  btnSaveStatus   =   findViewById(R.id.btnSaveStatus);
+
+//        AskReminderDialogBinding askReminderDialogBinding
 
         header_name.setText(CallerName);
         header_number.setText(CallerNumber);
@@ -146,14 +147,36 @@ public class EditNoteActivity extends AppCompatActivity {
                     Snackbar.make(findViewById(android.R.id.content), "Please select Status or write some Note.", Snackbar.LENGTH_LONG).show();
                 }else {
                     saveTextNote();
-                    saveStatus();
+//                    saveStatus();
 
                     final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(EditNoteActivity.this);
-                    alertBuilder.setView(R.layout.ask_reminder_dialog);
-                    alertBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                    alertBuilder.setView(R.layout.ask_reminder_dialog);
+                    alertBuilder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            dialog.dismiss();
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent toReminder = new Intent(EditNoteActivity.this , AddReminder.class);
+                            toReminder.putExtra("Date" , model.getDate());
+                            toReminder.putExtra("Number" , model.getNumber());
+                            toReminder.putExtra("Name" , model.getExtra());
+                            toReminder.putExtra("Note" , model.getNote());
+                            startActivity(toReminder);
+                        }
+                    });
+
+                    alertBuilder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            boolean ins =  helper.SAVENOTE(model);
+                            if(ins){
+                                Toast.makeText(EditNoteActivity.this, "Note Saved Successfully", Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                Toast.makeText(EditNoteActivity.this, "Error", Toast.LENGTH_LONG).show();
+
+                            }
+
+                            Intent toMain = new Intent(EditNoteActivity.this , MainActivity.class);
+                            startActivity(toMain);
                         }
                     });
                     alertBuilder.show();
@@ -161,46 +184,67 @@ public class EditNoteActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+        /*AskReminderDialogBinding askReminderDialogBinding = DataBindingUtil.inflate(LayoutInflater.from(this),R.layout.ask_reminder_dialog,null,false);
+        askReminderDialogBinding.yesRemindMeBtnId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toReminder = new Intent(EditNoteActivity.this , AddReminder.class);
+                toReminder.putExtra("Date" , model.getDate());
+                toReminder.putExtra("Number" , model.getNumber());
+                toReminder.putExtra("Name" , model.getExtra());
+                toReminder.putExtra("Note" , model.getNote());
+                startActivity(toReminder);
+            }
+        });
+
+        askReminderDialogBinding.cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                boolean ins =  helper.SAVENOTE(model);
+                if(ins){
+                    Toast.makeText(EditNoteActivity.this, "Note Saved Successfully", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(EditNoteActivity.this, "Error", Toast.LENGTH_LONG).show();
+
+                }
+
+                Intent toMain = new Intent(EditNoteActivity.this , MainActivity.class);
+                startActivity(toMain);
+            }
+        });*/
     }
 
-    private void saveStatus() {
+    /*private void saveStatus() {
 
         if(spin.getSelectedItem().toString().equals("Select Status")){
          return;
         }
-            /*if(chek_status_value.equals("Insert")){
+            *//*if(chek_status_value.equals("Insert")){
                 boolean f=  helper.SaveStatus(CallDate, spin.getSelectedItem().toString());
-              *//*  if(f)
+              *//**//*  if(f)
                     Snackbar.make(findViewById(android.R.id.content), "Status Saved", Snackbar.LENGTH_LONG).show();
-              *//*  return;
+              *//**//*  return;
             }
             if(chek_status_value.equals("Update")) {
                 boolean g=helper.update_status(CallDate,spin.getSelectedItem().toString());
-               *//* if(g){
+               *//**//* if(g){
                     Snackbar.make(findViewById(android.R.id.content), "Update Saved", Snackbar.LENGTH_LONG).show();
-                }*//*
+                }*//**//*
                 return;
-            }*/
-    }
+            }*//*
+    }*/
 
     private void saveTextNote() {
-            String text = editTextNote.getText().toString();
-            String currentTime=getCurrentTime();
-            String currentDate=getCurrentDate();
-            SugarModel model = new SugarModel();
-            model.setDate(CallDate);
-            model.setNumber(CallerNumber);
-            model.setExtra(CallerName);
-            model.setNote(text);
-            model.setCurrentTime(currentTime);
-            model.setCurrentDate(currentDate);
-            boolean reault = helper.SAVENOTE(model);
-            if (reault) {
-                Snackbar.make(findViewById(android.R.id.content), "Saved.", Snackbar.LENGTH_LONG).show();
-            } else {
-                Snackbar.make(findViewById(android.R.id.content), "Error.", Snackbar.LENGTH_LONG).show();
-            }
-
+        String text = editTextNote.getText().toString();
+        model.setDate(CallDate);
+        model.setNumber(CallerNumber);
+        model.setExtra(CallerName);
+        model.setNote(text);
     }
 
     private void getTextData() {
@@ -380,13 +424,13 @@ public class EditNoteActivity extends AppCompatActivity {
     public void saveReminder(View view) {
         Intent toSaveReminder = new Intent(EditNoteActivity.this , AddReminder.class);
         startActivity(toSaveReminder);
-        finish();
+//        finish();
     }
 
     public void cencelReminder(View view) {
         Toast.makeText(this, "No Reminders Added", Toast.LENGTH_SHORT).show();
         Intent toMain = new Intent(EditNoteActivity.this , MainActivity.class);
         startActivity(toMain);
-        finish();
+//        finish();
     }
 }

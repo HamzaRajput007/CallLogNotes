@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     SQLiteDatabase sqLiteDatabase;
-    public static final String DATABASE_NAME = "CallerNotes.db";
+    public static final String DATABASE_NAME = "QWikiNotes.db";
 
     public static final String TABLE_NAME = "callernotes";
     public static final String COL_1 = "ID";
@@ -27,8 +27,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_3 = "NOTE";
     public static final String COL_4 = "EXTRA";
     public static final String COL_5 = "NUMBER";
-    public static final String COL_6= "CURRENTDATE";
-    public static final String COL_7 = "CURRENTTIME";
+//    public static final String COL_6= "CURRENTDATE";
+//    public static final String COL_7 = "CURRENTTIME";
+    public static final String HOURS = "HOURS";
+    public static final String MINUTES = "MINUTES";
+    public static final String DAY_OF_MONTH = "DATE";
+    public static final String MONTH = "MONTH";
+    public static final String YEAR = "YEAR";
+    public static final String AMPM = "AMPM";
 
     public static final String TABLE_VOICE_NOTES = "TABLEVoiceNotes";
     public static final String COL_1_voice_ID = "ID";
@@ -54,13 +60,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String REMINDERS_TABLE  = "REMINDERS_TABLE";
     public static final String REMINDER_ID = "ID";
-    public static final String HOURS = "HOURS";
-    public static final String MINUTES = "MINUTES";
-    public static final String DAY_OF_MONTH = "DATE";
-    public static final String MONTH = "MONTH";
-    public static final String YEAR = "YEAR";
+
     public static final String REMINDER_NOTE_ID = "NOTE_ID";
-    public static final String AMPM = "AMPM";
 
     Context context;
 
@@ -75,7 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
 
-        String query_voice_notes = (" CREATE TABLE  " + TABLE_VOICE_NOTES + " (" +
+        String query_voice_notes = (" CREATE TABLE IF NOT EXISTS " + TABLE_VOICE_NOTES + " (" +
                 COL_1_voice_ID + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
                 COL_2_FILENOTESNAME + " VARCHAR," +
                 COL_3_VOICENOTETIME + " VARCHAR );"
@@ -83,7 +84,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         
         sqLiteDatabase.execSQL(query_voice_notes);
 
-        /*String query_reminder_table = (" CREATE TABLE " + REMINDERS_TABLE + " ( " +
+        /*String query_reminder_table = (" CREATE TABLE IF NOT EXISTS " + REMINDERS_TABLE + " ( " +
               REMINDER_ID + "INTEGER PRIMARY KEY AUTOINCREMENT," +
                 HOURS +" INTEGER, " +
                 MINUTES +" INTEGER, " +
@@ -93,15 +94,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 REMINDER_NOTE_ID + "INTEGER," +
                 AMPM + "VARCHAR"+");"
         );
-        sqLiteDatabase.execSQL(query_reminder_table);*/
+        sqLiteDatabase.execSQL(query_reminder_table);
 
-        String query_signup = (" CREATE TABLE  " + TABLE_NAME + " (" +
+         public static final String COL_1 = "ID";
+//    public static final String COL_2 = "DATE";
+    public static final String COL_3 = "NOTE";
+    public static final String COL_4 = "EXTRA";
+    public static final String COL_5 = "NUMBER";
+//    public static final String COL_6= "CURRENTDATE";
+//    public static final String COL_7 = "CURRENTTIME";
+    public static final String HOURS = "HOURS";
+    public static final String MINUTES = "MINUTES";
+    public static final String DAY_OF_MONTH = "DATE";
+    public static final String MONTH = "MONTH";
+    public static final String YEAR = "YEAR";
+    public static final String AMPM = "AMPM";
+
+*/
+        String query_signup = (" CREATE TABLE " + TABLE_NAME + " (" +
                 COL_1 + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
-                COL_2 + " VARCHAR," +
                 COL_3 + " VARCHAR," +
+                COL_2 + "VARCHAR," +
                 COL_5 + " VARCHAR," +
-                COL_6 + " VARCHAR," +
-                COL_7 + " VARCHAR," +
+                HOURS + "INTEGER," +
+                MINUTES + "INTEGER," +
+                DAY_OF_MONTH + "INTEGER," +
+                MONTH + "INTEGER," +
+                YEAR + "INTEGER," +
+                AMPM + "VARCHAR," +
                 COL_4 + " VARCHAR"+");"
         );
         sqLiteDatabase.execSQL(query_signup);
@@ -114,14 +134,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY "+ NOTE_CALL_LOG_ID + "REFERENCE" + TABLE_NAME + "(" + COL_1 +" ));");
         sqLiteDatabase.execSQL((query_table_notes_of_call_log));*/
 
-        String query_status = (" CREATE TABLE  " + TABLE_STATUS + " (" +
+        String query_status = (" CREATE TABLE IF NOT EXISTS " + TABLE_STATUS + " (" +
                 COL_1_STATUS_ID + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
                 COL_2_STATUS_DATE + " VARCHAR," +
                 COL_3_STATUS_VALUE + " VARCHAR );"
         );
         sqLiteDatabase.execSQL(query_status);
 
-        String query_customer = (" CREATE TABLE  " + TABLE_CALLRECORDING + " (" +
+        String query_customer = (" CREATE TABLE  IF NOT EXISTS " + TABLE_CALLRECORDING + " (" +
                 COL_1_ID + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
                 COL_2_Filename + " VARCHAR," +
                 COL_3_CallTime + " VARCHAR );"
@@ -137,12 +157,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + TABLE_CALLRECORDING);
         sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + TABLE_STATUS);
         sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + TABLE_NOTES_OF_CALL_LOG);
-        sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + REMINDERS_TABLE);
+//        sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + REMINDERS_TABLE);
         onCreate(sqLiteDatabase);
 
     }
 
-    public Cursor getReminder(int noteID){
+    /*public Cursor getReminder(int noteID){
         sqLiteDatabase = this.getReadableDatabase();
         String[] columns = {REMINDER_ID , HOURS , MINUTES , YEAR , MONTH , DAY_OF_MONTH};
         String selection = REMINDER_NOTE_ID + " = ?";
@@ -152,11 +172,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return cursor;
         }
         return null;
-    }
+    }*/
 
     //Todo SQLiteException: no such table: REMINDERS_TABLE occurs when inserting ... Resolve it when you are back
 
-    public boolean saveReminder(int year , int month , int dayOfMonth , int hours , int minutes , String amPm ){
+   /* public boolean saveReminder(int year , int month , int dayOfMonth , int hours , int minutes , String amPm ){
         sqLiteDatabase = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(YEAR , year);
@@ -172,9 +192,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else{
             return true;
         }
-    }
+    }*/
 
-    public  boolean saveNote(String noteContent , String timeStamp , String callLogId){
+   /* public  boolean saveNote(String noteContent , String timeStamp , String callLogId){
         sqLiteDatabase = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(NOTE_CONTENT , noteContent);
@@ -187,7 +207,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else{
             return true;
         }
-    }
+    }*/
 
     //To Get a specific note at onclick listener of list_of_note_activity
     public Cursor getNote(int noteId){
@@ -204,9 +224,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
 
     }
-
-
-
 
     public boolean SaveStatus(String date,String value) {
         sqLiteDatabase = this.getWritableDatabase();
@@ -308,8 +325,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COL_3, model.getNote());
         cv.put(COL_4, model.getExtra());
         cv.put(COL_5, model.getNumber());
-        cv.put(COL_6, model.getCurrentDate());
-        cv.put(COL_7, model.getCurrentTime());
+        cv.put(HOURS , model.getHours());
+        cv.put(MINUTES , model.getMinutes());
+        cv.put(DAY_OF_MONTH , model.getDayOfMonth());
+//        cv.put(MONTH , model.getMonth());
+        cv.put(YEAR , model.getYear());
+// todo table callernotes has no column named DATE {Solve it}
         long ins = sqLiteDatabase.insert(TABLE_NAME, null, cv);
         if (ins == -1) {
             return false;

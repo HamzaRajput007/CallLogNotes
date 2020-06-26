@@ -2,9 +2,61 @@ package com.developer.calllogmanager.Models;
 
 import com.orm.SugarRecord;
 
-public class SugarModel extends SugarRecord {
+import java.io.Serializable;
+
+public class SugarModel extends SugarRecord implements Serializable {
     String Uid,date,note,number,extra;
-    String currentDate, currentTime;
+    String currentDate, currentTime, ampm ;
+    int hours , minutes , dayOfMonth , month , year ;
+
+    public int getHours() {
+        return hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public int getDayOfMonth() {
+        return dayOfMonth;
+    }
+
+    public void setDayOfMonth(int dayOfMonth) {
+        this.dayOfMonth = dayOfMonth;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public String getAmpm() {
+        return ampm;
+    }
+
+    public void setAmpm(String ampm) {
+        this.ampm = ampm;
+    }
+
     public SugarModel(){
         super();
     }
