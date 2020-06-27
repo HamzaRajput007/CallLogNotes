@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
@@ -44,6 +45,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder;
 import cafe.adriel.androidaudiorecorder.model.AudioChannel;
@@ -52,6 +54,9 @@ import cafe.adriel.androidaudiorecorder.model.AudioSource;
 import nl.changer.audiowife.AudioWife;
 
 public class EditNoteActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE_SPEECH_INPUT = 1000;
+    private static final int REQUEST_CODE_SPEECH_INPUT_STATUS = 2000;
+
     String CallerName;
     String CallerNumber;
     String CallDate;
@@ -70,6 +75,8 @@ public class EditNoteActivity extends AppCompatActivity {
     TextView tvCurrentDate, tvCurrentTime;
     TimePicker reminderTimePicker ;
     CalendarView reminderDatePicker;
+
+
     SugarModel model = new SugarModel();  // this model will be not completely initialized here ... reminder data needs to be added
 
     @Override
@@ -150,37 +157,7 @@ public class EditNoteActivity extends AppCompatActivity {
                     saveTextNote();
 //                    saveStatus();
 
-                    final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(EditNoteActivity.this);
-                    alertBuilder.setView(R.layout.ask_reminder_dialog);
-                   /* alertBuilder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent toReminder = new Intent(EditNoteActivity.this , AddReminder.class);
-                            toReminder.putExtra("Date" , model.getDate());
-                            toReminder.putExtra("Number" , model.getNumber());
-                            toReminder.putExtra("Name" , model.getExtra());
-                            toReminder.putExtra("Note" , model.getNote());
-                            startActivity(toReminder);
-                        }
-                    });
 
-                    alertBuilder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            boolean ins =  helper.SAVENOTE(model);
-                            if(ins){
-                                Toast.makeText(EditNoteActivity.this, "Note Saved Successfully", Toast.LENGTH_LONG).show();
-                            }
-                            else{
-                                Toast.makeText(EditNoteActivity.this, "Error", Toast.LENGTH_LONG).show();
-
-                            }
-
-                            Intent toMain = new Intent(EditNoteActivity.this , MainActivity.class);
-                            startActivity(toMain);
-                        }
-                    });*/
-                    alertBuilder.show();
 
                 }
 
@@ -246,6 +223,8 @@ public class EditNoteActivity extends AppCompatActivity {
                 startActivity(toMain);
             }
         });*/
+
+        speak();
     }
 
     /*private void saveStatus() {
@@ -354,6 +333,36 @@ public class EditNoteActivity extends AppCompatActivity {
                 // Start recording
                 .record();
     }
+
+    private void speak() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to add note text");
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT);
+
+        }catch (Exception e){
+            Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void speakStatus() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to add Status");
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT_STATUS);
+
+        }catch (Exception e){
+            Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -383,6 +392,92 @@ public class EditNoteActivity extends AppCompatActivity {
                 Snackbar.make(findViewById(android.R.id.content), "Error in recording voice notes", Snackbar.LENGTH_SHORT).show();
             }
         }
+
+        switch (requestCode){
+            case REQUEST_CODE_SPEECH_INPUT:
+            {
+                if (resultCode == RESULT_OK && null != data){
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    editTextNote.setText(result.get(0));
+                    Toast.makeText(this, ""+result, Toast.LENGTH_LONG).show();
+                    saveTextNote();
+                    speakStatus();
+                    /*final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(EditNoteActivity.this);
+                    alertBuilder.setView(R.layout.ask_reminder_dialog);
+                   *//* alertBuilder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent toReminder = new Intent(EditNoteActivity.this , AddReminder.class);
+                            toReminder.putExtra("Date" , model.getDate());
+                            toReminder.putExtra("Number" , model.getNumber());
+                            toReminder.putExtra("Name" , model.getExtra());
+                            toReminder.putExtra("Note" , model.getNote());
+                            startActivity(toReminder);
+                        }
+                    });
+
+                    alertBuilder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            boolean ins =  helper.SAVENOTE(model);
+                            if(ins){
+                                Toast.makeText(EditNoteActivity.this, "Note Saved Successfully", Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                Toast.makeText(EditNoteActivity.this, "Error", Toast.LENGTH_LONG).show();
+
+                            }
+
+                            Intent toMain = new Intent(EditNoteActivity.this , MainActivity.class);
+                            startActivity(toMain);
+                        }
+                    });*//*
+                    alertBuilder.show();*/
+                }
+                break;
+            }
+            case REQUEST_CODE_SPEECH_INPUT_STATUS:{
+                if (resultCode == RESULT_OK && null != data){
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    Toast.makeText(this, ""+result, Toast.LENGTH_LONG).show();
+//                    saveTextNote();
+//                    speakStatus();
+                    final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(EditNoteActivity.this);
+                    alertBuilder.setView(R.layout.ask_reminder_dialog);
+                   /* alertBuilder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent toReminder = new Intent(EditNoteActivity.this , AddReminder.class);
+                            toReminder.putExtra("Date" , model.getDate());
+                            toReminder.putExtra("Number" , model.getNumber());
+                            toReminder.putExtra("Name" , model.getExtra());
+                            toReminder.putExtra("Note" , model.getNote());
+                            startActivity(toReminder);
+                        }
+                    });
+
+                    alertBuilder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            boolean ins =  helper.SAVENOTE(model);
+                            if(ins){
+                                Toast.makeText(EditNoteActivity.this, "Note Saved Successfully", Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                Toast.makeText(EditNoteActivity.this, "Error", Toast.LENGTH_LONG).show();
+
+                            }
+
+                            Intent toMain = new Intent(EditNoteActivity.this , MainActivity.class);
+                            startActivity(toMain);
+                        }
+                    });*/
+                    alertBuilder.show();
+                }
+            }
+            break;
+        }
+
     }
 
     @Override

@@ -69,7 +69,7 @@ public class AfterCallActivity extends AppCompatActivity {
         mainList =  loadAllData();
 
         final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle("Want to add note for this call ?");
+        alertBuilder.setTitle("Do you wish to leave a message with this call?");
         alertBuilder.setMessage("This will remind you about this call later");
         alertBuilder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
