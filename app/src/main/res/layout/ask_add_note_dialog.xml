@@ -27,12 +27,12 @@
                     android:gravity="center"
                     android:textSize="18dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Want to add a riminder ?"/>
+                    android:text="Want to add a NOTE ?"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Click NO to save the note without any reminder"
+                    android:text="This will remind you about this call"
                     android:textSize="9dp"
                     android:textStyle="italic"
                     android:textColor="@color/white"/>
@@ -47,7 +47,7 @@
                 android:layout_marginTop="3dp"
                 >
                 <Button
-                    android:id="@+id/cancel"
+                    android:id="@+id/dontAddNoteBtnId"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                     android:layout_height="1dp"  />
 
                 <Button
-                    android:id="@+id/yesRemindMeBtnId"
+                    android:id="@+id/addNoteBtnID"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

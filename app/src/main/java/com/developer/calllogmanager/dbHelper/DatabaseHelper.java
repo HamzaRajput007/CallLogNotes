@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     SQLiteDatabase sqLiteDatabase;
-    public static final String DATABASE_NAME = "QWikiNotes.db";
+    public static final String DATABASE_NAME = "NewQWikiNotes.db";
 
     public static final String TABLE_NAME = "callernotes";
     public static final String COL_1 = "ID";
@@ -66,7 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     Context context;
 
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 9);
+        super(context, DATABASE_NAME, null, 5);
         sqLiteDatabase = this.getWritableDatabase();
         this.context = context;
 //        onCreate(sqLiteDatabase);

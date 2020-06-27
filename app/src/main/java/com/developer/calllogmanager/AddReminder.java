@@ -78,14 +78,14 @@ public class AddReminder extends AppCompatActivity {
                 modelSugar.setYear(reminderYear);
                 modelSugar.setAmpm("AM");
 
+//                boolean result = helper.SAVENOTE(modelSugar);
                 boolean result = helper.SAVENOTE(modelSugar);
-
                 if (result) {
-                    Snackbar.make(findViewById(android.R.id.content), "Reminder Saved.", Snackbar.LENGTH_LONG).show();
-                    Toast.makeText(AddReminder.this, "Reminder Saved", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(android.R.id.content), "Note Saved.", Snackbar.LENGTH_LONG).show();
+                    Toast.makeText(AddReminder.this, "Note Saved", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Snackbar.make(findViewById(android.R.id.content), "Error.", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), "Error Note Not Saved.", Snackbar.LENGTH_LONG).show();
                 }
                 finish();
             }

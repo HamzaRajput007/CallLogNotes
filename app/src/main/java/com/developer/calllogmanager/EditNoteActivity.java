@@ -77,6 +77,7 @@ public class EditNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
 
+        final AskReminderDialogBinding askReminderDialogBinding =  DataBindingUtil.inflate(LayoutInflater.from(this),R.layout.ask_reminder_dialog,null,false);
 
 
         helper = new DatabaseHelper(this);
@@ -150,8 +151,8 @@ public class EditNoteActivity extends AppCompatActivity {
 //                    saveStatus();
 
                     final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(EditNoteActivity.this);
-//                    alertBuilder.setView(R.layout.ask_reminder_dialog);
-                    alertBuilder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    alertBuilder.setView(R.layout.ask_reminder_dialog);
+                   /* alertBuilder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Intent toReminder = new Intent(EditNoteActivity.this , AddReminder.class);
@@ -178,13 +179,41 @@ public class EditNoteActivity extends AppCompatActivity {
                             Intent toMain = new Intent(EditNoteActivity.this , MainActivity.class);
                             startActivity(toMain);
                         }
-                    });
+                    });*/
                     alertBuilder.show();
+
                 }
 
             }
         });
+        askReminderDialogBinding.yesRemindMeBtnId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toReminder = new Intent(EditNoteActivity.this , AddReminder.class);
+                toReminder.putExtra("Date" , model.getDate());
+                toReminder.putExtra("Number" , model.getNumber());
+                toReminder.putExtra("Name" , model.getExtra());
+                toReminder.putExtra("Note" , model.getNote());
+                startActivity(toReminder);
+            }
+        });
 
+        askReminderDialogBinding.cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean ins =  helper.SAVENOTE(model);
+                if(ins){
+                    Toast.makeText(EditNoteActivity.this, "Note Saved Successfully", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(EditNoteActivity.this, "Error", Toast.LENGTH_LONG).show();
+
+                }
+
+                Intent toMain = new Intent(EditNoteActivity.this , MainActivity.class);
+                startActivity(toMain);
+            }
+        });
 
 
         /*AskReminderDialogBinding askReminderDialogBinding = DataBindingUtil.inflate(LayoutInflater.from(this),R.layout.ask_reminder_dialog,null,false);

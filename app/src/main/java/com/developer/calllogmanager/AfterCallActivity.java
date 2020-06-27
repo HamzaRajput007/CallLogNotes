@@ -8,20 +8,26 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.CallLog;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.developer.calllogmanager.Models.SugarModel;
+import com.developer.calllogmanager.databinding.AskAddNoteDialogBinding;
 import com.developer.calllogmanager.dbHelper.DatabaseHelper;
 
 import java.io.File;
@@ -42,6 +48,7 @@ public class AfterCallActivity extends AppCompatActivity {
     int color ;
     int requestCode = 0;
     File file;
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +69,8 @@ public class AfterCallActivity extends AppCompatActivity {
         mainList =  loadAllData();
 
         final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle("Write a Note for this call");
-        alertBuilder.setMessage("Would you like to add a note and reminder for the last call ?");
+        alertBuilder.setTitle("Want to add note for this call ?");
+        alertBuilder.setMessage("This will remind you about this call later");
         alertBuilder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -77,9 +84,23 @@ public class AfterCallActivity extends AppCompatActivity {
                 Toast.makeText(AfterCallActivity.this, "No Notes Added for the call", Toast.LENGTH_SHORT).show();
             }
         });
-
+//       alertBuilder.setView(R.layout.ask_add_note_dialog);
         alertBuilder.show();
 
+        AskAddNoteDialogBinding askAddNoteDialogBinding = DataBindingUtil.inflate(LayoutInflater.from(this),R.layout.ask_add_note_dialog,new LinearLayout(this),false);
+        askAddNoteDialogBinding.dontAddNoteBtnId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(AfterCallActivity.this, "No Notes Added", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        askAddNoteDialogBinding.addNoteBtnID.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToEditNoteActivity();
+            }
+        });
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

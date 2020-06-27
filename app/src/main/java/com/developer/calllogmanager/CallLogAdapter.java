@@ -80,7 +80,7 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
     @Override
     public CallLogViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        ListRowBinding itemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.list_row,parent,false);
+        ListRowBinding itemBinding =  DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.list_row,parent,false);
         color = context.getResources().getColor(R.color.colorPrimaryDark);
         filePath = Environment.getExternalStorageDirectory() + "/recorded_audio_notes";
         return new CallLogViewHolder(itemBinding);
