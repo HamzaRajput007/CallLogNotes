@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.media.MediaPlayer;
 import android.os.Environment;
@@ -20,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -34,6 +36,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLogViewHolder>{
@@ -148,8 +151,6 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
                 itemBinding.textViewName.setText(callLog.getName());
             itemBinding.textViewCallDuration.setText(Utils.formatSeconds(callLog.getDuration()));
             Date dateObj = new Date(callLog.getDate());
-            ////////////////////////////////////////////////////////////////
-            //Toast.makeText(context, ""+callLog.getDate(), Toast.LENGTH_SHORT).show();
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy hh:mm a");
             itemBinding.textViewCallNumber.setText(callLog.getNumber());
             if (callLog.isFlag()){
@@ -171,8 +172,7 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
             itemBinding.imageeditnote.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-            //        showDialogsds(String.valueOf(callLog.getDate()),callLog.getNumber(),callLog.getName(),itemBinding,position);
-                    //Toast.makeText(context, "dddd", Toast.LENGTH_SHORT).show();
+
                     Intent intent=new Intent(context, ListOfNotes.class);
 
                     intent.putExtra("NUMBER",callLog.getNumber());
@@ -209,15 +209,6 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
             itemBinding.imageaddnote.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    /*Intent intent=new Intent(context, EditNoteActivity.class);
-                    intent.putExtra("NUMBER",callLog.getNumber());
-                    intent.putExtra("NAME",callLog.getName());
-                    intent.putExtra("DATE",String.valueOf(callLog.getDate()));
-                    intent.putExtra("POSITION",position);
-                    context.startActivity(intent);*/
-                 //   showDialogsds(String.valueOf(callLog.getDate()),callLog.getNumber(),callLog.getName(),itemBinding,position);
-                   // showDialog(String.valueOf(callLog.getDate()),callLog.getNumber(),callLog.getName(),itemBinding,position);
-                    //Toast.makeText(context, "dddd", Toast.LENGTH_SHORT).show();
 
                     Intent toEditNOte = new Intent(context , EditNoteActivity.class );
                     toEditNOte.putExtra("DATE",String.valueOf(callLog.getDate()));
@@ -234,11 +225,11 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
         }
     }
 
-   /* public void showDialog(final String date, final String number, final String name, final ListRowBinding itembinding, final int position){
+    public void showDialog(final String date, final String number, final String name, final ListRowBinding itembinding, final int position){
         final SugarModel model = new SugarModel();
         final DatabaseHelper databaseHelper= new DatabaseHelper(ClassStatic.activity);
 //        SugarModel fetch = null;
-        ArrayList<SugarModel> fetch = databaseHelper.GETNOTE( date);
+        Cursor fetch = databaseHelper.GETNOTE(date);
         final Dialog dialog = new Dialog(ClassStatic.activity);
         dialog.setContentView(R.layout.addnote_dialog);
         dialog.setTitle("Note");
@@ -252,9 +243,9 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
         final EditText edit=(EditText)dialog.findViewById(R.id.grouptitle);
         txtname.setText(name);
         txtnumber.setText(number);
-        if (fetch!=null)
+       /* if (fetch!=null)
         if (fetch.getNote()!=null)
-            edit.setText(fetch.getNote());
+            edit.setText(fetch.getNote());*/
         save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String text=edit.getText().toString();
@@ -267,20 +258,20 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
                     Snackbar.make(recyclerView, "Please write some Note.", Snackbar.LENGTH_LONG).show();
                     return;
                 }
-//                boolean reault = databaseHelper.SAVENOTE(model);
-//                if (reault){
-//                     itembinding.imageeditnote.setVisibility(View.VISIBLE);
-//                     itembinding.imagedeletenote.setVisibility(View.VISIBLE);
-//                     itembinding.imageaddnote.setVisibility(View.GONE);
-//                     callLogInfoArrayList.get(position).setFlag(true);
-//                     notifyDataSetChanged();
-//                }
+                boolean reault = databaseHelper.SAVENOTE(model);
+                if (reault){
+                     itembinding.imageeditnote.setVisibility(View.VISIBLE);
+                     itembinding.imagedeletenote.setVisibility(View.VISIBLE);
+                     itembinding.imageaddnote.setVisibility(View.GONE);
+                     callLogInfoArrayList.get(position).setFlag(true);
+                     notifyDataSetChanged();
+                }
                     Snackbar.make(recyclerView, "Note saved.", Snackbar.LENGTH_LONG).show();
-                //model.save();
-                //List<SugarModel> s = SugarModel.findWithQuery(SugarModel.class,"SELECT * FROM SugarModel WHERE `date`="+mydate);
-                ///t.makeText(getActivity().getApplicationContext(), ""+s, Toast.LENGTH_SHORT).show();
+                model.save();
+//                List<SugarModel> s = SugarModel.findWithQuery(SugarModel.class,"SELECT * FROM SugarModel WHERE `date`="+mydate);
+//                Toast.makeText(getActivity().getApplicationContext(), ""+s, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
-                //name=text;
+//                name=text;
 
             }
         });
@@ -290,7 +281,7 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
                 dialog.dismiss();
             }
         });
-*//*        delete.setOnClickListener(new View.OnClickListener() {
+        delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int id = databaseHelper.deleteEntry(date);
@@ -309,10 +300,9 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
                 }
 
             }
-        });*//*
+        });
         dialog.show();
     }
-*/
 
     public void showDialogsds(final String date, final String number, final String name, final ListRowBinding itembinding, final int position){
 

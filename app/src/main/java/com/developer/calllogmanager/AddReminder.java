@@ -67,7 +67,7 @@ public class AddReminder extends AppCompatActivity {
         btnSaveReminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                modelSugar.setDate(date);
+//                modelSugar.setDate(date);
                 modelSugar.setNumber(number);
                 modelSugar.setNote(note);
                 modelSugar.setExtra(extra);

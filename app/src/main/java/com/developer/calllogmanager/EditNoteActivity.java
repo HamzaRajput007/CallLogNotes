@@ -156,9 +156,37 @@ public class EditNoteActivity extends AppCompatActivity {
                 }else {
                     saveTextNote();
 //                    saveStatus();
+                    final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(EditNoteActivity.this);
+                    alertBuilder.setView(R.layout.ask_reminder_dialog);
+                   /* alertBuilder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent toReminder = new Intent(EditNoteActivity.this , AddReminder.class);
+                            toReminder.putExtra("Date" , model.getDate());
+                            toReminder.putExtra("Number" , model.getNumber());
+                            toReminder.putExtra("Name" , model.getExtra());
+                            toReminder.putExtra("Note" , model.getNote());
+                            startActivity(toReminder);
+                        }
+                    });
 
+                    alertBuilder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            boolean ins =  helper.SAVENOTE(model);
+                            if(ins){
+                                Toast.makeText(EditNoteActivity.this, "Note Saved Successfully", Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                Toast.makeText(EditNoteActivity.this, "Error", Toast.LENGTH_LONG).show();
 
+                            }
 
+                            Intent toMain = new Intent(EditNoteActivity.this , MainActivity.class);
+                            startActivity(toMain);
+                        }
+                    });*/
+                    alertBuilder.show();
                 }
 
             }
@@ -295,7 +323,7 @@ public class EditNoteActivity extends AppCompatActivity {
         if (a.length()>2){
             chek_status_value="Update";
             if (a != null) {
-                int spinnerPosition = adapter.getPosition(a);
+                int spinnerPosition = adapter.getPfosition(a);
                 spin.setSelection(spinnerPosition);
             }
         }

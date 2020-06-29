@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.media.session.PlaybackState;
 import android.support.annotation.VisibleForTesting;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
@@ -31,7 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //    public static final String COL_7 = "CURRENTTIME";
     public static final String HOURS = "HOURS";
     public static final String MINUTES = "MINUTES";
-    public static final String DAY_OF_MONTH = "DATE";
+    public static final String DAY_OF_MONTH = "DAY_OF_MONTH";
     public static final String MONTH = "MONTH";
     public static final String YEAR = "YEAR";
     public static final String AMPM = "AMPM";
@@ -69,19 +70,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, 5);
         sqLiteDatabase = this.getWritableDatabase();
         this.context = context;
+        defindDB();
 //        onCreate(sqLiteDatabase);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
+        this.sqLiteDatabase = sqLiteDatabase;
+        defindDB();
+    }
 
+    private void defindDB(){
         String query_voice_notes = (" CREATE TABLE IF NOT EXISTS " + TABLE_VOICE_NOTES + " (" +
-                COL_1_voice_ID + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
+                COL_1_voice_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COL_2_FILENOTESNAME + " VARCHAR," +
                 COL_3_VOICENOTETIME + " VARCHAR );"
         );
-        
+
         sqLiteDatabase.execSQL(query_voice_notes);
 
         /*String query_reminder_table = (" CREATE TABLE IF NOT EXISTS " + REMINDERS_TABLE + " ( " +
@@ -111,17 +117,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String AMPM = "AMPM";
 
 */
-        String query_signup = (" CREATE TABLE " + TABLE_NAME + " (" +
+        String query_signup = (" CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
                 COL_1 + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
+                COL_2 + " INTEGER," +
                 COL_3 + " VARCHAR," +
-                COL_2 + "VARCHAR," +
                 COL_5 + " VARCHAR," +
-                HOURS + "INTEGER," +
-                MINUTES + "INTEGER," +
-                DAY_OF_MONTH + "INTEGER," +
-                MONTH + "INTEGER," +
-                YEAR + "INTEGER," +
-                AMPM + "VARCHAR," +
+                HOURS + " INTEGER," +
+                MINUTES + " INTEGER," +
+                DAY_OF_MONTH  + " INTEGER," +
+                MONTH + " INTEGER," +
+                YEAR + " INTEGER," +
+                AMPM + " VARCHAR," +
                 COL_4 + " VARCHAR"+");"
         );
         sqLiteDatabase.execSQL(query_signup);
@@ -318,6 +324,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
+//    public Cursor GetReminder(String Date){
+//
+//    }
+
     public boolean SAVENOTE(SugarModel model) {
         sqLiteDatabase = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -328,7 +338,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(HOURS , model.getHours());
         cv.put(MINUTES , model.getMinutes());
         cv.put(DAY_OF_MONTH , model.getDayOfMonth());
-//        cv.put(MONTH , model.getMonth());
+        cv.put(MONTH , model.getMonth());
         cv.put(YEAR , model.getYear());
 // todo table callernotes has no column named DATE {Solve it}
         long ins = sqLiteDatabase.insert(TABLE_NAME, null, cv);

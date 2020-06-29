@@ -63,7 +63,6 @@ public class AfterCallActivity extends AppCompatActivity {
         {
             file.mkdir();
         }
-
         filePath=file.getAbsolutePath();
         mainList = new ArrayList<>();
         mainList =  loadAllData();
@@ -81,7 +80,7 @@ public class AfterCallActivity extends AppCompatActivity {
         alertBuilder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(AfterCallActivity.this, "No Notes Added for the call", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AfterCallActivity.this, "No Notes Added for this call", Toast.LENGTH_SHORT).show();
             }
         });
 //       alertBuilder.setView(R.layout.ask_add_note_dialog);
