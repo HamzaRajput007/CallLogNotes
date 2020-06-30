@@ -100,23 +100,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 REMINDER_NOTE_ID + "INTEGER," +
                 AMPM + "VARCHAR"+");"
         );
-        sqLiteDatabase.execSQL(query_reminder_table);
-
-         public static final String COL_1 = "ID";
-//    public static final String COL_2 = "DATE";
-    public static final String COL_3 = "NOTE";
-    public static final String COL_4 = "EXTRA";
-    public static final String COL_5 = "NUMBER";
-//    public static final String COL_6= "CURRENTDATE";
-//    public static final String COL_7 = "CURRENTTIME";
-    public static final String HOURS = "HOURS";
-    public static final String MINUTES = "MINUTES";
-    public static final String DAY_OF_MONTH = "DATE";
-    public static final String MONTH = "MONTH";
-    public static final String YEAR = "YEAR";
-    public static final String AMPM = "AMPM";
-
-*/
+        sqLiteDatabase.execSQL(query_reminder_table);*/
         String query_signup = (" CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
                 COL_1 + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
                 COL_2 + " INTEGER," +
@@ -324,9 +308,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-//    public Cursor GetReminder(String Date){
-//
-//    }
+    public Cursor GetReminder(long Date){
+        sqLiteDatabase = this.getReadableDatabase();
+        Cursor reminders = sqLiteDatabase.rawQuery("SELECT ( " + HOURS +
+                "," + MINUTES +
+                "," + DAY_OF_MONTH +
+                "," + MONTH +
+                "," + YEAR +
+                " )" +
+                " FROM " + TABLE_NAME +
+                " WHERE " + COL_2 + "=" + Date , null);
+
+        return reminders;
+    }
 
     public boolean SAVENOTE(SugarModel model) {
         sqLiteDatabase = this.getWritableDatabase();
@@ -413,7 +407,9 @@ public ArrayList<SugarModel> FetchVoiceData() {
     }*/
     public int deleteEntry(String row) {
         sqLiteDatabase = this.getReadableDatabase();
-        int var = sqLiteDatabase.delete(TABLE_NAME, COL_2 + "=" + row, null);
+        String selection = COL_2 + " = ?";
+        String[] args = {row};
+        int var = sqLiteDatabase.delete(TABLE_NAME, selection , args);
         if (var > 0) {
             return var;
         }
@@ -421,7 +417,9 @@ public ArrayList<SugarModel> FetchVoiceData() {
     }
     public int deleteVoiceEntry(String row) {
         sqLiteDatabase = this.getReadableDatabase();
-        int var = sqLiteDatabase.delete(TABLE_VOICE_NOTES, COL_2_FILENOTESNAME + "=" + row, null);
+        String selection = COL_2_FILENOTESNAME + " = ?";
+        String[] args = {row};
+        int var = sqLiteDatabase.delete(TABLE_VOICE_NOTES, selection, args);
         if (var > 0) {
             return var;
         }
@@ -429,7 +427,10 @@ public ArrayList<SugarModel> FetchVoiceData() {
     }
     public int deletestatus(String row) {
         sqLiteDatabase = this.getReadableDatabase();
-        int var = sqLiteDatabase.delete(TABLE_STATUS, COL_2_STATUS_DATE + "=" + row, null);
+        String[] columns = {COL_2};
+        String selection = COL_2_STATUS_DATE + " = ?";
+        String[] args = {row};
+        int var = sqLiteDatabase.delete(TABLE_STATUS, selection ,args);
         if (var > 0) {
             return var;
         }

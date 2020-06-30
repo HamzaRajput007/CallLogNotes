@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.developer.calllogmanager.R;
 import com.developer.calllogmanager.databinding.ActivityStatisticsBinding;
 
 public class StatisticsActivity extends AppCompatActivity {
@@ -16,7 +17,7 @@ public class StatisticsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_statistics);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_statistics);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initValues();
     }

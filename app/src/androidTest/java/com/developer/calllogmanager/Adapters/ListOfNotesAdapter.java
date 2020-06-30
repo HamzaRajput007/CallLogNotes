@@ -31,7 +31,8 @@ public class ListOfNotesAdapter extends RecyclerView.Adapter<ListOfNotesAdapter.
             String number = m.getNumber();
             arrayList.add(m);
             arrayList.indexOf(m);
-            int size = arrayList.size();        }
+            int size = arrayList.size();
+        }
     }
 
     @NonNull

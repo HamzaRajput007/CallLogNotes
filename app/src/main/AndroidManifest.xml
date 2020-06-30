@@ -26,12 +26,12 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddReminder"></activity>
-        <activity android:name=".ListOfNotes"></activity>
+        <activity android:name="calllognotes.AddReminder"></activity>
+        <activity android:name="calllognotes.ListOfNotes"></activity>
         <activity
-            android:name=".EditNoteActivity"
+            android:name="calllognotes.EditNoteActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AfterCallActivity" />
+        <activity android:name="calllognotes.AfterCallActivity" />
 
         <meta-data
             android:name="DATABASE"
@@ -47,7 +47,7 @@
             android:value="com.developer.calllogmanager.SugarModel.SugarModel" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="calllognotes.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -57,9 +57,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".StatisticsActivity"
+            android:name="calllognotes.StatisticsActivity"
             android:label="Statistics" /> <!-- This part is inside the application -->
-        <receiver android:name=".CallReceiver">
+        <receiver android:name="calllognotes.CallReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
@@ -67,13 +67,13 @@
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".AllCallsReceiver">
+        <receiver android:name="calllognotes.AllCallsReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".RecorderService" />
+        <service android:name="calllognotes.RecorderService" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

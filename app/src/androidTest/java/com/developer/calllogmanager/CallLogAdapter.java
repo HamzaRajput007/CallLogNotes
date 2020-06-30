@@ -29,6 +29,7 @@ import android.widget.Toast;
 import android.widget.Toast;
 
 import com.developer.calllogmanager.Models.SugarModel;
+import com.developer.calllogmanager.R;
 import com.developer.calllogmanager.databinding.ListRowBinding;
 import com.developer.calllogmanager.dbHelper.DatabaseHelper;
 
@@ -160,8 +161,8 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
 
             }
             else{
-                itemBinding.imageeditnote.setVisibility(View.GONE);
-                itemBinding.imagedeletenote.setVisibility(View.GONE);
+                itemBinding.imageeditnote.setVisibility(View.VISIBLE);
+                itemBinding.imagedeletenote.setVisibility(View.VISIBLE);
                 itemBinding.imageaddnote.setVisibility(View.VISIBLE);
 
             }
@@ -192,8 +193,8 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
                     int id2 = databaseHelper.deletestatus(String.valueOf(callLog.getDate()));
 
                     if (id>0 || id1>0||id2>0){
-                        itemBinding.imageeditnote.setVisibility(View.GONE);
-                        itemBinding.imagedeletenote.setVisibility(View.GONE);
+                        itemBinding.imageeditnote.setVisibility(View.VISIBLE);
+                        itemBinding.imagedeletenote.setVisibility(View.VISIBLE);
                         itemBinding.textViewStatus.setText("");
                         itemBinding.imageaddnote.setVisibility(View.VISIBLE);
                         callLogInfoArrayList.get(position).setFlag(false);
@@ -210,9 +211,12 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
                 @Override
                 public void onClick(View view) {
 
-                    Intent toEditNOte = new Intent(context , EditNoteActivity.class );
-                    toEditNOte.putExtra("DATE",String.valueOf(callLog.getDate()));
-                    context.startActivity(toEditNOte);
+                    Intent intent = new Intent(context , EditNoteActivity.class );
+                    intent.putExtra("NUMBER",callLog.getNumber());
+                    intent.putExtra("NAME",callLog.getName());
+                    intent.putExtra("DATE",String.valueOf(callLog.getDate()));
+                    intent.putExtra("POSITION",position);
+                    context.startActivity(intent);
                 }
             });
             itemBinding.getRoot().setOnClickListener(new View.OnClickListener() {
@@ -350,7 +354,7 @@ public class CallLogAdapter  extends RecyclerView.Adapter<CallLogAdapter.CallLog
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //    showDialog(date,number,name,itembinding,position);
+                showDialog(date,number,name,itembinding,position);
             }
         });
         mic.setOnClickListener(new View.OnClickListener() {

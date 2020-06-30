@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.developer.calllogmanager.R;
 import com.developer.calllogmanager.databinding.CallLogFragmentBinding;
 
 public class OutgoingCallsFragment extends Fragment{
@@ -23,7 +24,7 @@ public class OutgoingCallsFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),R.layout.call_log_fragment,container,false);
+        binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.call_log_fragment,container,false);
         initComponents();
         return binding.getRoot();
     }

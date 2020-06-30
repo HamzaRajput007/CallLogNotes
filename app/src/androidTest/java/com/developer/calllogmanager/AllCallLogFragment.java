@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import com.developer.calllogmanager.Models.SugarModel;
+import com.developer.calllogmanager.R;
 import com.developer.calllogmanager.databinding.CallLogFragmentBinding;
 import com.developer.calllogmanager.dbHelper.DatabaseHelper;
 import java.io.File;
@@ -126,7 +127,7 @@ public class AllCallLogFragment extends Fragment {
                 DatabaseHelper helper1 = new DatabaseHelper(getActivity().getApplicationContext());
                 String filename = helper1.select_File(date);
                 //Toast.makeText(getActivity(), ""+filename, Toast.LENGTH_SHORT).show();
-                if (filename.length() > 4) {
+                /*if (filename.length() > 4) {
                     String path = Environment.getExternalStorageDirectory() + "/My Records/" + new CallLogUtils(getActivity().getApplicationContext()).getDateaa() + "/" + filename;
 
                     Log.d("path", "onClick: " + path);
@@ -140,7 +141,16 @@ public class AllCallLogFragment extends Fragment {
                     pref.edit().putBoolean("pauseStateVLC", true).apply();
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Recording not found", Toast.LENGTH_SHORT).show();
-                }
+                }*/
+
+            /*    DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
+                Cursor reminder = databaseHelper.GetReminder(callLogInfo.getDate());
+
+                if(reminder.moveToFirst()){
+                    Toast.makeText(getActivity(), String.valueOf(reminder.getColumnCount()), Toast.LENGTH_SHORT).show();
+                }*/
+
+
 
             }
         };

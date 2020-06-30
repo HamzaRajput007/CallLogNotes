@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.developer.calllogmanager.Models.SugarModel;
+import com.developer.calllogmanager.R;
 import com.developer.calllogmanager.databinding.AskAddNoteDialogBinding;
 import com.developer.calllogmanager.dbHelper.DatabaseHelper;
 

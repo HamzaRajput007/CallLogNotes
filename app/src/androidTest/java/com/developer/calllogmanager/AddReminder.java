@@ -1,5 +1,6 @@
 package com.developer.calllogmanager;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +13,6 @@ import android.widget.Toast;
 
 import com.developer.calllogmanager.Models.SugarModel;
 import com.developer.calllogmanager.dbHelper.DatabaseHelper;
-
-import java.sql.Date;
-import java.time.DayOfWeek;
 
 public class AddReminder extends AppCompatActivity {
 
@@ -81,8 +79,10 @@ public class AddReminder extends AppCompatActivity {
 //                boolean result = helper.SAVENOTE(modelSugar);
                 boolean result = helper.SAVENOTE(modelSugar);
                 if (result) {
-                    Snackbar.make(findViewById(android.R.id.content), "Note Saved.", Snackbar.LENGTH_LONG).show();
-                    Toast.makeText(AddReminder.this, "Note Saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddReminder.this, "Note Saved With Reminder", Toast.LENGTH_SHORT).show();
+                    Intent toMain = new Intent(getApplicationContext() , MainActivity.class);
+                    startActivity(toMain);
+                    finish();
 
                 } else {
                     Snackbar.make(findViewById(android.R.id.content), "Error Note Not Saved.", Snackbar.LENGTH_LONG).show();

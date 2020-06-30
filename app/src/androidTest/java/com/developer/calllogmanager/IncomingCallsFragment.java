@@ -1,7 +1,7 @@
 package com.developer.calllogmanager;
 
-import android.databinding.DataBindingUtil;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,10 +12,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.developer.calllogmanager.R;
 import com.developer.calllogmanager.databinding.CallLogFragmentBinding;
 
-
-public class MissedCallsFragment extends Fragment{
+public class IncomingCallsFragment extends Fragment{
     CallLogFragmentBinding binding;
     CallLogAdapter adapter;
     CallLogAdapter.OnCallLogItemClickListener onItemClickListener;
@@ -23,7 +24,7 @@ public class MissedCallsFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),R.layout.call_log_fragment,container,false);
+        binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.call_log_fragment,container,false);
         initComponents();
         return binding.getRoot();
     }
@@ -39,7 +40,7 @@ public class MissedCallsFragment extends Fragment{
 
     public void loadData(){
         CallLogUtils callLogUtils = CallLogUtils.getInstance(getContext());
-     //   adapter.addAllCallLog(callLogUtils.getMissedCalls());
+      //  adapter.addAllCallLog(callLogUtils.getIncommingCalls());
         adapter.notifyDataSetChanged();
         onItemClickListener = new CallLogAdapter.OnCallLogItemClickListener() {
             @Override

@@ -34,6 +34,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.developer.calllogmanager.Models.SugarModel;
+import com.developer.calllogmanager.R;
 import com.developer.calllogmanager.databinding.AskReminderDialogBinding;
 import com.developer.calllogmanager.databinding.ListRowBinding;
 import com.developer.calllogmanager.dbHelper.DatabaseHelper;
@@ -51,6 +52,7 @@ import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder;
 import cafe.adriel.androidaudiorecorder.model.AudioChannel;
 import cafe.adriel.androidaudiorecorder.model.AudioSampleRate;
 import cafe.adriel.androidaudiorecorder.model.AudioSource;
+import calllognotes.prefrence.SessionManager;
 import nl.changer.audiowife.AudioWife;
 
 public class EditNoteActivity extends AppCompatActivity {
@@ -158,34 +160,6 @@ public class EditNoteActivity extends AppCompatActivity {
 //                    saveStatus();
                     final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(EditNoteActivity.this);
                     alertBuilder.setView(R.layout.ask_reminder_dialog);
-                   /* alertBuilder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent toReminder = new Intent(EditNoteActivity.this , AddReminder.class);
-                            toReminder.putExtra("Date" , model.getDate());
-                            toReminder.putExtra("Number" , model.getNumber());
-                            toReminder.putExtra("Name" , model.getExtra());
-                            toReminder.putExtra("Note" , model.getNote());
-                            startActivity(toReminder);
-                        }
-                    });
-
-                    alertBuilder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            boolean ins =  helper.SAVENOTE(model);
-                            if(ins){
-                                Toast.makeText(EditNoteActivity.this, "Note Saved Successfully", Toast.LENGTH_LONG).show();
-                            }
-                            else{
-                                Toast.makeText(EditNoteActivity.this, "Error", Toast.LENGTH_LONG).show();
-
-                            }
-
-                            Intent toMain = new Intent(EditNoteActivity.this , MainActivity.class);
-                            startActivity(toMain);
-                        }
-                    });*/
                     alertBuilder.show();
                 }
 
@@ -195,6 +169,11 @@ public class EditNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent toReminder = new Intent(EditNoteActivity.this , AddReminder.class);
+
+                String Datetest = model.getDate();
+                String number = model.getNumber();
+                String Extra = model.getExtra();
+                String Note = model.getNote();
                 toReminder.putExtra("Date" , model.getDate());
                 toReminder.putExtra("Number" , model.getNumber());
                 toReminder.putExtra("Name" , model.getExtra());
@@ -208,7 +187,7 @@ public class EditNoteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boolean ins =  helper.SAVENOTE(model);
                 if(ins){
-                    Toast.makeText(EditNoteActivity.this, "Note Saved Successfully", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditNoteActivity.this, "Note Saved Without Reminder", Toast.LENGTH_LONG).show();
                 }
                 else{
                     Toast.makeText(EditNoteActivity.this, "Error", Toast.LENGTH_LONG).show();
@@ -219,38 +198,6 @@ public class EditNoteActivity extends AppCompatActivity {
                 startActivity(toMain);
             }
         });
-
-
-        /*AskReminderDialogBinding askReminderDialogBinding = DataBindingUtil.inflate(LayoutInflater.from(this),R.layout.ask_reminder_dialog,null,false);
-        askReminderDialogBinding.yesRemindMeBtnId.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent toReminder = new Intent(EditNoteActivity.this , AddReminder.class);
-                toReminder.putExtra("Date" , model.getDate());
-                toReminder.putExtra("Number" , model.getNumber());
-                toReminder.putExtra("Name" , model.getExtra());
-                toReminder.putExtra("Note" , model.getNote());
-                startActivity(toReminder);
-            }
-        });
-
-        askReminderDialogBinding.cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                boolean ins =  helper.SAVENOTE(model);
-                if(ins){
-                    Toast.makeText(EditNoteActivity.this, "Note Saved Successfully", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(EditNoteActivity.this, "Error", Toast.LENGTH_LONG).show();
-
-                }
-
-                Intent toMain = new Intent(EditNoteActivity.this , MainActivity.class);
-                startActivity(toMain);
-            }
-        });*/
 
         speak();
     }

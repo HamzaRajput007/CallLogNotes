@@ -27,9 +27,11 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.developer.calllogmanager.Models.SugarModel;
+import calllognotes.Models.SugarModel;
+
+import com.developer.calllogmanager.R;
 import com.developer.calllogmanager.databinding.ActivityMainBinding;
-import com.developer.calllogmanager.dbHelper.DatabaseHelper;
+import calllognotes.dbHelper.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(this);
         pref.edit().putInt("numOfCalls",0).apply();
         initComponents();
@@ -108,8 +110,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void showDialog(final String date, final String number, final String name ){
-        final SugarModel model = new SugarModel();
-        final DatabaseHelper databaseHelper= new DatabaseHelper(ClassStatic.activity);
+        final com.developer.calllogmanager.Models.SugarModel model = new com.developer.calllogmanager.Models.SugarModel();
+        final com.developer.calllogmanager.dbHelper.DatabaseHelper databaseHelper= new com.developer.calllogmanager.dbHelper.DatabaseHelper(ClassStatic.activity);
 //        SugarModel fetch = null;
 
         final Dialog dialog = new Dialog(this);

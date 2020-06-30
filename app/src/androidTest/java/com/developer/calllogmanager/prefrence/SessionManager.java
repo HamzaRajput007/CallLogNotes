@@ -1,4 +1,4 @@
-package com.developer.calllogmanager.voiceupdate.prefrence;
+package calllognotes.prefrence;
 
 import android.content.Context;
 import android.content.SharedPreferences;
